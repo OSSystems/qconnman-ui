@@ -5,6 +5,7 @@
 
 #include <connman/connmanagent.h>
 
+#include <QMessageBox>
 #include <QDebug>
 
 Agent::Agent(QObject *parent):
@@ -56,5 +57,12 @@ QVariantMap Agent::RequestInput(const QDBusObjectPath &servicePath, const QVaria
 void Agent::ReportError(const QDBusObjectPath &servicePath, const QString &error)
 {
     qDebug() << "ReportError" << servicePath.path() << error;
+
+    if (error == "invalid-key")
+    {
+        Service service(servicePath.path(), this);
+        QMessageBox::critical(qobject_cast<QWidget *>(parent()), "Invalid password",
+                              QString("Unable to connect to '%1' wireless network because the entered password is invalid.").arg(service.name()));
+    }
 }
 
