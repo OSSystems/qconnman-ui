@@ -36,7 +36,9 @@ NetworkItemWidget::NetworkItemWidget(const QString &service, QListWidget *parent
     m_service = new Service(service, this);
 
     update();
+    toggleSpinner();
 
+    connect(m_service, SIGNAL(stateChanged()), SLOT(toggleSpinner()));
     connect(m_service, SIGNAL(propertiesChanged()), SLOT(update()));
 }
 
@@ -52,5 +54,14 @@ void NetworkItemWidget::update()
     ui.secured->setText(QString("Security-enabled network (%1)").arg(m_service->security().join(" ").toUpper()));
 
     ui.strength->setValue(m_service->strength());
+}
+
+void NetworkItemWidget::toggleSpinner()
+{
+    QString state = m_service->state();
+    if ((QStringList() << "ready" << "online" << "failure" << "idle").contains(state))
+        ui.spinner->setVisible(false);
+    else if ((QStringList() << "association" << "configuration").contains(state))
+        ui.spinner->setVisible(true);
 }
 

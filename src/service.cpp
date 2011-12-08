@@ -127,6 +127,9 @@ void Service::propertyChanged(const QString &name, const QDBusVariant &value)
 
     m_properties[name] = value.variant();
 
+    if (name == "State")
+        emit stateChanged();
+
     emit propertiesChanged();
 }
 

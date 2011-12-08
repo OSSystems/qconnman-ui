@@ -53,6 +53,7 @@ public:
 
 signals:
     void propertiesChanged();
+    void stateChanged();
 
 private slots:
     void processProperties(QDBusPendingCallWatcher *watcher);

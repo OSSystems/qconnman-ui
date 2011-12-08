@@ -35,6 +35,7 @@ public:
 
 private slots:
     void update();
+    void toggleSpinner();
 
 private:
     Ui::NetworkItemWidget ui;
