@@ -1,6 +1,6 @@
 #include "technology.h"
 
-#include <connman/connmantechnology.h>
+#include <dbus/connmantechnology.h>
 
 Technology::Technology(const QString &path, QObject *parent):
     QObject(parent)

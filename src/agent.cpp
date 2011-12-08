@@ -3,7 +3,7 @@
 #include "authdialog.h"
 #include "service.h"
 
-#include <connman/connmanagent.h>
+#include <dbus/connmanagent.h>
 
 #include <QMessageBox>
 #include <QDebug>

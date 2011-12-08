@@ -5,7 +5,7 @@
 #include "technology.h"
 #include "hiddennetworkdialog.h"
 
-#include <connman/connmanservice.h>
+#include <dbus/connmanservice.h>
 
 #include <QDebug>
 

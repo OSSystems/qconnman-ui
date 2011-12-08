@@ -1,6 +1,6 @@
 #include "service.h"
 
-#include <connman/connmanservice.h>
+#include <dbus/connmanservice.h>
 
 #include <QDebug>
 

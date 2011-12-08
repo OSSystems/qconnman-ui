@@ -1,7 +1,7 @@
 #include "connman.h"
 
-#include <connman/connmanmanager.h>
-#include <connman/connmanservice.h>
+#include <dbus/connmanmanager.h>
+#include <dbus/connmanservice.h>
 
 static Connman *self = NULL;
 
