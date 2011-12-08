@@ -59,7 +59,7 @@ void NetworkItemWidget::update()
 void NetworkItemWidget::toggleSpinner()
 {
     QString state = m_service->state();
-    if ((QStringList() << "ready" << "online" << "failure" << "idle").contains(state))
+    if ((QStringList() << "ready" << "online" << "failure" << "idle" << "disconnect").contains(state))
         ui.spinner->setVisible(false);
     else if ((QStringList() << "association" << "configuration").contains(state))
         ui.spinner->setVisible(true);
