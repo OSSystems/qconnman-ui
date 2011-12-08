@@ -6,8 +6,8 @@ This application development was started by [O.S. Systems](https://github.com/OS
 
 ## Authors
 
-* Luis Gustavo S. Barreto (gustavosbarreto@gmail.com)
+* Luis Gustavo S. Barreto (gustavo@ossystems.com.br)
 
 ## License
 
-Licensed under GNU Lesser General Public License.
+Licensed under GNU Lesser General Public License 2.1
