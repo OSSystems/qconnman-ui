@@ -1,0 +1,83 @@
+#include "ipv4widget.h"
+
+#include <QDebug>
+
+Ipv4Widget::Ipv4Widget(QWidget *parent):
+    QFrame(parent)
+{
+    ui.setupUi(this);
+}
+
+void Ipv4Widget::setSettings(const QVariantMap &settings)
+{
+    if (settings.isEmpty())
+    {
+        ui.autoIpAddress->setChecked(true);
+        ui.autoDns->setChecked(true);
+
+        ui.address->clear();
+        ui.netmask->clear();
+        ui.gateway->clear();
+
+        return;
+    }
+
+    ui.autoIpAddress->setChecked(settings["Method"] == "dhcp");
+    ui.manualIpAddress->setChecked(settings["Method"] != "dhcp");
+
+    ui.address->setText(settings["Address"].toString());
+    ui.netmask->setText(settings["Netmask"].toString());
+    if (settings["Gateway"].toString() != "0.0.0.0")
+        ui.gateway->setText(settings["Gateway"].toString());
+}
+
+QVariantMap Ipv4Widget::toMap()
+{
+    QVariantMap map;
+
+    if (ui.autoIpAddress->isChecked())
+    {
+        map["Method"] = "dhcp";
+    }
+    else if (ui.manualIpAddress->isChecked())
+    {
+        map["Method"] = "manual";
+        map["Address"] = ui.address->text();
+        map["Netmask"] = ui.netmask->text();
+        if (ui.gateway->text().isEmpty())
+            map["Gateway"] = "0.0.0.0";
+        else
+            map["Gateway"] = ui.gateway->text();
+    }
+
+    return map;
+}
+
+void Ipv4Widget::on_autoIpAddress_stateChanged(int state)
+{
+    ui.manualIpAddress->setChecked(state == Qt::Checked ? false : true);
+}
+
+void Ipv4Widget::on_manualIpAddress_toggled(bool on)
+{
+    ui.autoIpAddress->setCheckState(on ? Qt::Unchecked : Qt::Checked);
+    if (on)
+        ui.manualDns->setChecked(true);
+}
+
+void Ipv4Widget::on_autoDns_stateChanged(int state)
+{
+    ui.manualDns->setChecked(state == Qt::Checked ? false : true);
+
+    if (state == Qt::Checked)
+    {
+        ui.autoIpAddress->setCheckState(Qt::Checked);
+        ui.preferredDns->clear();
+        ui.alternateDns->clear();
+    }
+}
+
+void Ipv4Widget::on_manualDns_toggled(bool on)
+{
+    ui.autoDns->setCheckState(on ? Qt::Unchecked : Qt::Checked);
+}
