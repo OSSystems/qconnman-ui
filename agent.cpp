@@ -8,7 +8,7 @@
 #include <QDebug>
 
 Agent::Agent(QObject *parent):
-    QObject(parent)
+    QObject(parent), QDBusContext()
 {
     new ConnmanAgent(this);
 
@@ -40,7 +40,10 @@ QVariantMap Agent::RequestInput(const QDBusObjectPath &servicePath, const QVaria
         Service service(servicePath.path(), this);
         AuthDialog dialog(service.security().join(" ").toUpper(), service.passphrase(), qobject_cast<QWidget *>(parent()));
         if (dialog.exec() != QDialog::Accepted)
-            return map;
+        {
+            sendErrorReply("net.connman.Agent.Error.Cancel", "");
+            return fields;
+        }
 
         map["Passphrase"] = dialog.password();
     }
