@@ -134,7 +134,7 @@ height: 5px;
           <string/>
          </property>
          <property name="pixmap">
-          <pixmap resource="qconnman.qrc">:/images/protected.png</pixmap>
+          <pixmap>:/images/protected.png</pixmap>
          </property>
          <property name="scaledContents">
           <bool>true</bool>
@@ -182,8 +182,32 @@ height: 5px;
      </item>
     </layout>
    </item>
+   <item>
+    <widget class="SpinnerWidget" name="spinner" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>22</width>
+       <height>22</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>22</width>
+       <height>22</height>
+      </size>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>SpinnerWidget</class>
+   <extends>QWidget</extends>
+   <header>spinnerwidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="qconnman.qrc"/>
  </resources>
