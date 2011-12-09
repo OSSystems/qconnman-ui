@@ -18,12 +18,25 @@
 */
 
 #include <QApplication>
+#include <QTranslator>
+#include <QLibraryInfo>
 
 #include "mainwindow.h"
 
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
+
+    QTranslator qtTranslator;
+    qtTranslator.load("qt_" + QLocale::system().name(),
+                      QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+    app.installTranslator(&qtTranslator);
+
+    QTranslator *appTranslator = new QTranslator;
+    appTranslator->load(QString("%1/../share/qconnman/i18n/%2")
+                        .arg(QCoreApplication::applicationDirPath())
+                        .arg(QLocale::system().name()));
+    app.installTranslator(appTranslator);
 
     (new MainWindow)->show();
 
