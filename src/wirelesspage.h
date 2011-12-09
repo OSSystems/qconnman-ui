@@ -44,8 +44,6 @@ private slots:
     void connectToNetwork();
     void disconnect();
 
-    void showAddNetworkDialog();
-
 private:
     Ui::WirelessPage ui;
     Technology *m_technology;

@@ -39,7 +39,6 @@ WirelessPage::WirelessPage(QWidget *parent):
 
     connect(ui.connectButton, SIGNAL(clicked()), SLOT(connectToNetwork()));
     connect(ui.disconnectButton, SIGNAL(clicked()), SLOT(disconnect()));
-//    connect(ui.otherButton, SIGNAL(clicked()), SLOT(showAddNetworkDialog()));
 
     connect(ui.networkList, SIGNAL(currentRowChanged(int)), SLOT(networkListItemChanged(int)));
 
@@ -102,9 +101,6 @@ void WirelessPage::updateState()
         return;
     }
 
-    qDebug() << connectedServicePath();
-    qDebug() << ui.networkList->selectedNetwork();
-
     Service service(connectedServicePath(), this);
     ui.connectButton->setEnabled(service.path() != ui.networkList->selectedNetwork());
     ui.disconnectButton->setEnabled(service.path() == ui.networkList->selectedNetwork());
@@ -142,13 +138,4 @@ void WirelessPage::connectToNetwork()
 void WirelessPage::disconnect()
 {
     Service(ui.networkList->selectedNetwork(), this).disconnect();
-}
-
-void WirelessPage::showAddNetworkDialog()
-{
-//    AddNetworkDialog dialog(this);
-//    if (dialog.exec() != QDialog::Accepted)
-//        return;
-
-//    Connman::instance()->connectService(dialog.toMap());
 }
