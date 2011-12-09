@@ -26,6 +26,7 @@
 
 #include <dbus/connmanservice.h>
 
+#include <QMessageBox>
 #include <QDebug>
 
 WirelessPage::WirelessPage(QWidget *parent):
@@ -130,6 +131,22 @@ void WirelessPage::toggleTechnology(bool checked)
 
 void WirelessPage::connectToNetwork()
 {
+    QStringList services = Connman::instance()->services();
+    foreach (const QString &servicePath, services)
+    {
+        if (Connman::instance()->serviceType(servicePath) != "wifi")
+            continue;
+
+        Service service(servicePath, this);
+        if (!(QStringList() << "association" << "configuration").contains(service.state()))
+            continue;
+
+        if (servicePath != ui.networkList->selectedNetwork())
+            QMessageBox::warning(this, "Unable to connect", "Can't connect to this network while another connection is being established.");
+
+        return;
+    }
+
     Service service(ui.networkList->selectedNetwork(), this);
     service.setAutoConnect(true);
     service.connect();
