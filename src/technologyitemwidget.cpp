@@ -30,7 +30,7 @@ TechnologyItemWidget::TechnologyItemWidget(const QString &technology, QListWidge
     if (technology == "ethernet")
     {
         ui.icon->setPixmap(QPixmap(":/images/network-wired.png"));
-        ui.label->setText(tr("Disconnected"));
+        ui.label->setText(tr("Wired"));
     }
     else if (technology == "wifi")
     {
