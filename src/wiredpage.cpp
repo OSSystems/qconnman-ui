@@ -53,7 +53,7 @@ void WiredPage::updateButtonsVisibility()
 
     if (!enabled)
     {
-        ui.status->setText("Disabled");
+        ui.status->setText(tr("Disabled"));
         ui.info->setText("");
     }
 
@@ -62,15 +62,15 @@ void WiredPage::updateButtonsVisibility()
     {
         ui.connectButton->setEnabled(false);
         ui.disconnectButton->setEnabled(true);
-        ui.status->setText("Connected");
-        ui.info->setText(QString("Wired device is connected and has the IP Address %1")
+        ui.status->setText(tr("Connected"));
+        ui.info->setText(tr("Wired device is connected and has the IP Address %1")
                          .arg(Service(Connman::instance()->ethernetService(), this).ipv4Settings()["Address"].toString()));
     }
     else if (enabled && (state == "offline" || !connected))
     {
         ui.connectButton->setEnabled(true);
         ui.disconnectButton->setEnabled(false);
-        ui.status->setText("Disconnected");
+        ui.status->setText(tr("Disconnected"));
         ui.info->setText("");
     }
 

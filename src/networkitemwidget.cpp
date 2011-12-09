@@ -51,7 +51,7 @@ void NetworkItemWidget::update()
     ui.secured->setVisible(!m_service->security().contains("none"));
     ui.unsecured->setVisible(m_service->security().contains("none"));
     ui.securityIcon->setVisible(!m_service->security().contains("none"));
-    ui.secured->setText(QString("Security-enabled network (%1)").arg(m_service->security().join(" ").toUpper()));
+    ui.secured->setText(tr("Security-enabled network (%1)").arg(m_service->security().join(" ").toUpper()));
 
     ui.strength->setValue(m_service->strength());
 }
