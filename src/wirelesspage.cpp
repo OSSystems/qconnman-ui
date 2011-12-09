@@ -68,21 +68,21 @@ void WirelessPage::updateState()
 
     if (!enabled)
     {
-        ui.status->setText("Disabled");
+        ui.status->setText(tr("Disabled"));
         ui.info->setText("");
     }
 
     QString state = Technology(Connman::instance()->technologyPath("wifi"), this).state();
     if (state == "connected" || connected)
     {
-        ui.status->setText("Connected");
+        ui.status->setText(tr("Connected"));
 
         Q_FOREACH (const QString &servicePath, Connman::instance()->services())
         {
             Service service(servicePath, this);
             if ((QStringList() << "ready" << "online").contains(service.state()) && service.type() == "wifi")
             {
-                ui.info->setText(QString("Wireless device is connected to '%1' and has the IP Address %2")
+                ui.info->setText(tr("Wireless device is connected to '%1' and has the IP Address %2")
                                  .arg(service.name())
                                  .arg(service.ipv4Settings()["Address"].toString()));
                 break;
@@ -91,7 +91,7 @@ void WirelessPage::updateState()
     }
     else if (enabled && (state == "offline" || !connected))
     {
-        ui.status->setText("Disconnected");
+        ui.status->setText(tr("Disconnected"));
         ui.info->setText("");
     }
 
@@ -142,7 +142,7 @@ void WirelessPage::connectToNetwork()
             continue;
 
         if (servicePath != ui.networkList->selectedNetwork())
-            QMessageBox::warning(this, "Unable to connect", "Can't connect to this network while another connection is being established.");
+            QMessageBox::warning(this, tr("Unable to connect"), tr("Can't connect to this network while another connection is being established."));
 
         return;
     }
