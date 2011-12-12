@@ -2,6 +2,19 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="pt_BR">
 <context>
+    <name>Agent</name>
+    <message>
+        <location filename="../src/agent.cpp" line="83"/>
+        <source>Invalid password</source>
+        <translation>Senha inválida</translation>
+    </message>
+    <message>
+        <location filename="../src/agent.cpp" line="84"/>
+        <source>Unable to connect to &apos;%1&apos; wireless network because the entered password is invalid.</source>
+        <translation>Não foi possível conectar a rede sem fios &apos;%1&apos; porque a senha informada é inválida.</translation>
+    </message>
+</context>
+<context>
     <name>AuthDialog</name>
     <message>
         <location filename="../ui/authdialog.ui" line="14"/>
@@ -133,11 +146,6 @@
         <location filename="../src/technologyitemwidget.cpp" line="38"/>
         <source>Wireless</source>
         <translation>Sem fios</translation>
-    </message>
-    <message>
-        <location filename="../ui/technologyitemwidget.ui" line="47"/>
-        <source>TextLabel</source>
-        <translation>Rótulo de texto</translation>
     </message>
 </context>
 <context>
