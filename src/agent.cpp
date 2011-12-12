@@ -80,8 +80,8 @@ void Agent::ReportError(const QDBusObjectPath &servicePath, const QString &error
     if (error == "invalid-key")
     {
         Service service(servicePath.path(), this);
-        QMessageBox::critical(qobject_cast<QWidget *>(parent()), "Invalid password",
-                              QString("Unable to connect to '%1' wireless network because the entered password is invalid.").arg(service.name()));
+        QMessageBox::critical(qobject_cast<QWidget *>(parent()), tr("Invalid password"),
+                              tr("Unable to connect to '%1' wireless network because the entered password is invalid.").arg(service.name()));
     }
 }
 
