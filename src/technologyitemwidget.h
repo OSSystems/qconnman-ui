@@ -27,6 +27,8 @@ class QListWidgetItem;
 
 class TechnologyItemWidget: public QWidget
 {
+    Q_OBJECT
+
 public:
     TechnologyItemWidget(const QString &technology, QListWidget *parent);
 
