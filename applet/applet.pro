@@ -2,4 +2,9 @@ TARGET = qconnman-applet
 
 include($$PWD/../common/common.pri)
 
-SOURCES += $$PWD/main.cpp
+FORMS += $$PWD/wirelessnetworkwidget.ui
+
+SOURCES += $$PWD/main.cpp \
+  $$PWD/wirelessnetworkwidget.cpp
+
+HEADERS += $$PWD/wirelessnetworkwidget.h

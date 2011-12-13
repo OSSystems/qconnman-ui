@@ -1,7 +1,10 @@
 <RCC>
   <qresource prefix="/">
+    <file>images/security-high.png</file>
+    <file>images/security-low.png</file>
     <file>images/protected.png</file>
     <file>images/network-wired.png</file>
     <file>images/network-wireless.png</file>
+    <file>images/preferences-system-network.png</file>
   </qresource>
 </RCC>
