@@ -1,14 +1,3 @@
-TARGET = qconnman
-
-include($$PWD/../common/common.pri)
-
-FORMS += $$PWD/mainwindow.ui \
-  $$PWD/technologyitemwidget.ui \
-  $$PWD/wirelesspage.ui \
-  $$PWD/wiredpage.ui \
-  $$PWD/networkitemwidget.ui \
-  $$PWD/ipv4widget.ui
-
 SOURCES += $$PWD/main.cpp \
   $$PWD/mainwindow.cpp \
   $$PWD/technologylistwidget.cpp \
@@ -18,7 +7,13 @@ SOURCES += $$PWD/main.cpp \
   $$PWD/networkitemwidget.cpp \
   $$PWD/networklistwidget.cpp \
   $$PWD/ipv4widget.cpp \
-  $$PWD/spinnerwidget.cpp
+  $$PWD/spinnerwidget.cpp \
+  $$PWD/authdialog.cpp \
+  $$PWD/hiddennetworkdialog.cpp \
+  $$PWD/connman.cpp \
+  $$PWD/service.cpp \
+  $$PWD/technology.cpp \
+  $$PWD/agent.cpp
 
 HEADERS += $$PWD/mainwindow.h \
   $$PWD/technologylistwidget.h \
@@ -28,4 +23,10 @@ HEADERS += $$PWD/mainwindow.h \
   $$PWD/networkitemwidget.h \
   $$PWD/networklistwidget.h \
   $$PWD/ipv4widget.h \
-  $$PWD/spinnerwidget.h
+  $$PWD/spinnerwidget.h \
+  $$PWD/authdialog.h \
+  $$PWD/hiddennetworkdialog.h \
+  $$PWD/connman.h \
+  $$PWD/service.h \
+  $$PWD/technology.h \
+  $$PWD/agent.h
