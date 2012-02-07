@@ -89,7 +89,7 @@ void TrayIcon::execAction(QAction *action)
     QString data = action->data().toString();
     if (data == "manager-network")
     {
-        QProcess::startDetached("qconnman");
+        QProcess::startDetached("qconnman --manager");
         return;
     }
 
