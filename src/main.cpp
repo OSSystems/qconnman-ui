@@ -1,32 +1,99 @@
-t
-/*
- * qconnman - Connman Applet
- * Copyright (C) 2011 O.S. Systems
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
-
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
-*/
-
 #include <QApplication>
+#include <QStringList>
 #include <QTranslator>
 #include <QLibraryInfo>
+#include <QLocalServer>
+#include <QLocalSocket>
+#include <QDBusConnection>
+#include <QFile>
+#include <QDebug>
 
-#include "mainwindow.h"
+#include "connman.h"
+#include "trayicon.h"
+
+class Application: public QApplication
+{
+    Q_OBJECT
+
+public:
+    Application(int &argc, char *argv[])
+        : QApplication(argc, argv)
+    {
+        m_isAlreadyRunning = !QDBusConnection::sessionBus().registerService("net.qconnman");
+        if (!m_isAlreadyRunning)
+        {
+            QFile::remove("/tmp/qconnman");
+
+            Connman::instance()->init();
+
+            m_localServer = new QLocalServer(this);
+            connect(m_localServer, SIGNAL(newConnection()), this, SLOT(receiveMessage()));
+            m_localServer->listen("qconnman");
+
+            connect(this, SIGNAL(messageAvailable(QString)), SLOT(processMessage(QString)));
+        }
+    }
+
+    bool sendMessage(const QString &message)
+    {
+        QLocalSocket localSocket(this);
+        localSocket.connectToServer("qconnman", QIODevice::WriteOnly);
+        if (!localSocket.waitForConnected())
+            return false;
+
+        localSocket.write(message.toUtf8());
+        if (!localSocket.waitForBytesWritten())
+            return false;
+
+        localSocket.disconnectFromServer();
+        return true;
+    }
+
+    bool isAlreadyRunning()
+    {
+        return m_isAlreadyRunning;
+    }
+
+    void showApplet()
+    {
+        static TrayIcon *trayIcon = NULL;
+        if (!trayIcon)
+            trayIcon = new TrayIcon();
+    }
+
+private slots:
+    void receiveMessage()
+    {
+        QLocalSocket *localSocket = m_localServer->nextPendingConnection();
+        if (!localSocket->waitForReadyRead())
+            return;
+
+        QByteArray byteArray = localSocket->readAll();
+        QString message = QString::fromUtf8(byteArray.constData());
+        emit messageAvailable(message);
+        localSocket->disconnectFromServer();
+    }
+
+    void processMessage(const QString &msg)
+    {
+        if (msg == "show_manager")
+            qDebug("manager");
+        else if (msg == "show_applet")
+            showApplet();
+    }
+
+private:
+    QLocalServer *m_localServer;
+    bool m_isAlreadyRunning;
+
+signals:
+    void messageAvailable(QString message);
+};
 
 int main(int argc, char *argv[])
 {
-    QApplication app(argc, argv);
+    Application app(argc, argv);
+    app.setQuitOnLastWindowClosed(false);
 
     QTranslator qtTranslator;
     qtTranslator.load("qt_" + QLocale::system().name(),
@@ -37,9 +104,32 @@ int main(int argc, char *argv[])
     appTranslator->load(QString("%1/../share/qconnman/i18n/%2")
                         .arg(QCoreApplication::applicationDirPath())
                         .arg(QLocale::system().name()));
-    app.installTranslator(appTranslator);
 
-    (new MainWindow)->show();
+    QStringList args = app.arguments();
+    args.removeFirst();
+
+    if (!args.isEmpty() && args.at(0).contains(QRegExp("--?manager$")))
+    {
+        if (app.isAlreadyRunning())
+        {
+            app.sendMessage("show_manager");
+            exit(0);
+        }
+    }
+    else if (!args.isEmpty() && args.at(0).contains(QRegExp("--?applet$")))
+    {
+        if (app.isAlreadyRunning())
+        {
+            app.sendMessage("show_applet");
+            exit(0);
+        }
+
+        app.showApplet();
+    }
+    else
+        qFatal("Invalid option");
 
     return app.exec();
 }
+
+#include "main.moc"
