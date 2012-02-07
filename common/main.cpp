@@ -9,6 +9,7 @@
 #include <QDebug>
 
 #include "connman.h"
+#include "trayicon.h"
 
 class Application: public QApplication
 {
@@ -55,6 +56,9 @@ public:
 
     void showApplet()
     {
+        static TrayIcon *trayIcon = NULL;
+        if (!trayIcon)
+            trayIcon = new TrayIcon();
     }
 
 private slots:
