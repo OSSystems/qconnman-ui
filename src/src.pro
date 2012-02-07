@@ -23,6 +23,7 @@ QMAKE_EXTRA_COMPILERS += translations
 include($$PWD/../common/common.pri)
 include($$PWD/../common/dbus/dbus.pri)
 include($$PWD/../applet/applet.pri)
+include($$PWD/../manager/manager.pri)
 
 SOURCES += main.cpp
 

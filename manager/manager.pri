@@ -1,6 +1,4 @@
-TARGET = qconnman
-
-include($$PWD/../common/common.pri)
+INCLUDEPATH += $$PWD/
 
 FORMS += $$PWD/mainwindow.ui \
   $$PWD/technologyitemwidget.ui \
@@ -9,8 +7,7 @@ FORMS += $$PWD/mainwindow.ui \
   $$PWD/networkitemwidget.ui \
   $$PWD/ipv4widget.ui
 
-SOURCES += $$PWD/main.cpp \
-  $$PWD/mainwindow.cpp \
+SOURCES += $$PWD/mainwindow.cpp \
   $$PWD/technologylistwidget.cpp \
   $$PWD/technologyitemwidget.cpp \
   $$PWD/wirelesspage.cpp \
