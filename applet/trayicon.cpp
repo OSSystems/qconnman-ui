@@ -35,10 +35,12 @@ TrayIcon::TrayIcon(): QObject()
     m_trayIcon = new QSystemTrayIcon;
     m_trayIcon->setIcon(QIcon(QPixmap(":/images/network-wireless.png")));
     m_trayIcon->show();
-    
+
     connect(Connman::instance(), SIGNAL(technologiesChanged()), SLOT(updateMenu()));
     connect(Connman::instance(), SIGNAL(servicesChanged()), SLOT(updateMenu()));
-    
+
+    Connman::instance()->init();
+
     QTimer *timer = new QTimer(this);
     timer->start(30000);
     connect(timer, SIGNAL(timeout()), SLOT(scan()));

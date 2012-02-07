@@ -25,8 +25,6 @@ public:
         {
             QFile::remove("/tmp/qconnman");
 
-            Connman::instance()->init();
-
             m_localServer = new QLocalServer(this);
             connect(m_localServer, SIGNAL(newConnection()), this, SLOT(receiveMessage()));
             m_localServer->listen("qconnman");
