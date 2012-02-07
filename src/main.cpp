@@ -9,6 +9,7 @@
 #include <QDebug>
 
 #include "connman.h"
+#include "mainwindow.h"
 #include "trayicon.h"
 
 class Application: public QApplication
@@ -61,6 +62,14 @@ public:
             trayIcon = new TrayIcon();
     }
 
+    void showManager()
+    {
+        static MainWindow *window = NULL;
+        if (!window)
+            window = new MainWindow;
+        window->show();
+    }
+
 private slots:
     void receiveMessage()
     {
@@ -77,7 +86,7 @@ private slots:
     void processMessage(const QString &msg)
     {
         if (msg == "show_manager")
-            qDebug("manager");
+            showManager();
         else if (msg == "show_applet")
             showApplet();
     }
@@ -115,6 +124,8 @@ int main(int argc, char *argv[])
             app.sendMessage("show_manager");
             exit(0);
         }
+
+        app.showManager();
     }
     else if (!args.isEmpty() && args.at(0).contains(QRegExp("--?applet$")))
     {
