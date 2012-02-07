@@ -7,6 +7,8 @@ include($$PWD/../common/common.pri)
 FORMS += $$PWD/wirelessnetworkwidget.ui
 
 SOURCES += $$PWD/../common/main.cpp \
+  $$PWD/trayicon.cpp \
   $$PWD/wirelessnetworkwidget.cpp
 
-HEADERS += $$PWD/wirelessnetworkwidget.h
+HEADERS += $$PWD/trayicon.h \
+  $$PWD/wirelessnetworkwidget.h

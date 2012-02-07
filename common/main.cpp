@@ -53,6 +53,10 @@ public:
         return m_isAlreadyRunning;
     }
 
+    void showApplet()
+    {
+    }
+
 private slots:
     void receiveMessage()
     {
@@ -71,7 +75,7 @@ private slots:
         if (msg == "show_manager")
             qDebug("manager");
         else if (msg == "show_applet")
-            qDebug("show_applet");
+            showApplet();
     }
 
 private:
@@ -115,6 +119,8 @@ int main(int argc, char *argv[])
             app.sendMessage("show_applet");
             exit(0);
         }
+
+        app.showApplet();
     }
     else
         qFatal("Invalid option");
