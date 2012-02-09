@@ -41,13 +41,13 @@ void MainWindow::changePage(const QString &technology)
     QWidget *widget = m_pages.value(technology);
     if (!widget)
     {
-        if (technology == "ethernet")
+        if (technology.endsWith("ethernet"))
         {
             widget = new WiredPage(this);
             ui.stackedWidget->addWidget(widget);
             m_pages.insert(technology, widget);
         }
-        else if (technology == "wifi")
+        else if (technology.endsWith("wifi"))
         {
             widget = new WirelessPage(this);
             ui.stackedWidget->addWidget(widget);

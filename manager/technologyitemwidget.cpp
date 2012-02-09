@@ -27,12 +27,12 @@ TechnologyItemWidget::TechnologyItemWidget(const QString &technology, QListWidge
 {
     ui.setupUi(this);
 
-    if (technology == "ethernet")
+    if (technology.endsWith("ethernet"))
     {
         ui.icon->setPixmap(QPixmap(":/images/network-wired.png"));
         ui.label->setText(tr("Wired"));
     }
-    else if (technology == "wifi")
+    else if (technology.endsWith("wifi"))
     {
         ui.icon->setPixmap(QPixmap(":/images/network-wireless.png"));
         ui.label->setText(tr("Wireless"));
