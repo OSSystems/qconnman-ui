@@ -49,6 +49,9 @@ void Connman::init()
     QDBusPendingReply<QVariantMap> reply = m_manager->GetProperties();
     QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(reply, this);
     connect(watcher, SIGNAL(finished(QDBusPendingCallWatcher *)), SLOT(processConnmanProperties(QDBusPendingCallWatcher *)));
+
+    QDBusConnection::systemBus().connect("net.connman", "/", "net.connman.Manager", "TechnologyAdded",
+                                         this, SLOT(processNewTechnology(const QDBusObjectPath &, const QVariantMap &)));
 }
 
 void Connman::registerAgent(const QString &path)
@@ -188,4 +191,9 @@ void Connman::propertyChanged(const QString &name, const QDBusVariant &value)
     }
 
     qDebug() << "Manager PropertyChanged" << name;
+}
+
+void Connman::processNewTechnology(const QDBusObjectPath &obj, const QVariantMap &map)
+{
+    qDebug() << "new technology" << obj.path();
 }

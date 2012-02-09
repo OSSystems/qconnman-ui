@@ -66,6 +66,7 @@ private:
 private slots:
     void processConnmanProperties(QDBusPendingCallWatcher *watcher);
     void propertyChanged(const QString &name, const QDBusVariant &value);
+    void processNewTechnology(const QDBusObjectPath &obj, const QVariantMap &map);
 
 private:
     ConnmanManager *m_manager;
