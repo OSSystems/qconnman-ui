@@ -4,46 +4,26 @@
 	<interface name="net.connman.Manager">
 		<method name="GetProperties">
 			<arg type="a{sv}" direction="out"/>
-            <annotation name="com.trolltech.QtDBus.QtTypeName.Out0" value="QVariantMap"/>
+			<annotation name="com.trolltech.QtDBus.QtTypeName.Out0" value="QVariantMap"/>
 		</method>
 		<method name="SetProperty">
 			<arg type="s" direction="in"/>
 			<arg type="v" direction="in"/>
 		</method>
-		<method name="GetState">
-			<arg type="s" direction="out"/>
+		<method name="GetTechnologies">
+			<arg type="a(oa{sv})" direction="out"/>
+			<annotation name="com.trolltech.QtDBus.QtTypeName.Out0" value="TechnologyList"/>
 		</method>
 		<method name="RemoveProvider">
 			<arg type="o" direction="in"/>
 		</method>
-		<method name="RequestScan">
-			<arg type="s" direction="in"/>
-		</method>
-		<method name="EnableTechnology">
-			<arg type="s" direction="in"/>
-		</method>
-		<method name="DisableTechnology">
-			<arg type="s" direction="in"/>
-		</method>
 		<method name="GetServices">
 			<arg type="a(oa{sv})" direction="out"/>
-            <annotation name="com.trolltech.QtDBus.QtTypeName.Out0" value="QVariantMap"/>
-		</method>
-		<method name="LookupService">
-			<arg type="s" direction="in"/>
-			<arg type="o" direction="out"/>
-		</method>
-		<method name="ConnectService">
-			<arg type="a{sv}" direction="in"/>
-            <annotation name="com.trolltech.QtDBus.QtTypeName.In0" value="QVariantMap"/>
-			<arg type="o" direction="out"/>
-		</method>
-		<method name="ProvisionService">
-			<arg type="s" direction="in"/>
+			<annotation name="com.trolltech.QtDBus.QtTypeName.Out0" value="QVariantMap"/>
 		</method>
 		<method name="ConnectProvider">
 			<arg type="a{sv}" direction="in"/>
-            <annotation name="com.trolltech.QtDBus.QtTypeName.In0" value="QVariantMap"/>
+			<annotation name="com.trolltech.QtDBus.QtTypeName.In0" value="QVariantMap"/>
 			<arg type="o" direction="out"/>
 		</method>
 		<method name="RegisterAgent">
@@ -62,12 +42,19 @@
 		</method>
 		<method name="CreateSession">
 			<arg type="a{sv}" direction="in"/>
-            <annotation name="com.trolltech.QtDBus.QtTypeName.In0" value="QVariantMap"/>
+			<annotation name="com.trolltech.QtDBus.QtTypeName.In0" value="QVariantMap"/>
 			<arg type="o" direction="in"/>
 			<arg type="o" direction="out"/>
 		</method>
 		<method name="DestroySession">
 			<arg type="o" direction="in"/>
+		</method>
+		<method name="RequestPrivateNetwork">
+			<arg type="o" direction="out"/>
+			<arg type="a{sv}" direction="out"/>
+			<annotation name="com.trolltech.QtDBus.QtTypeName.Out1" value="QVariantMap"/>
+			<arg type="h" direction="out"/>
+			<annotation name="com.trolltech.QtDBus.QtTypeName.Out2" value="int"/>
 		</method>
 		<method name="ReleasePrivateNetwork">
 			<arg type="o" direction="in"/>
@@ -76,9 +63,12 @@
 			<arg type="s"/>
 			<arg type="v"/>
 		</signal>
-		<signal name="StateChanged">
-			<arg type="s"/>
+		<signal name="TechnologyAdded">
+			<arg type="a{sv}"/>
+			<annotation name="com.trolltech.QtDBus.QtTypeName.In0" value="QVariantMap"/>
+		</signal>
+		<signal name="TechnologyRemoved">
+			<arg type="o"/>
 		</signal>
 	</interface>
 </node>
-

@@ -24,8 +24,27 @@
 
 static Connman *self = NULL;
 
+QDBusArgument &operator<<(QDBusArgument &argument, const TechnologyStruct &value)
+{
+    argument.beginStructure();
+    argument << value.obj << value.map;
+    argument.endStructure();
+    return argument;
+}
+
+const QDBusArgument &operator>>(const QDBusArgument &argument, TechnologyStruct &value)
+{
+    argument.beginStructure();
+    argument >> value.obj >> value.map;
+    argument.endStructure();
+    return argument;
+}
+
 void Connman::init()
 {
+    qDBusRegisterMetaType<TechnologyStruct>();
+    qDBusRegisterMetaType<TechnologyList>();
+
     QDBusPendingReply<QVariantMap> reply = m_manager->GetProperties();
     QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(reply, this);
     connect(watcher, SIGNAL(finished(QDBusPendingCallWatcher *)), SLOT(processConnmanProperties(QDBusPendingCallWatcher *)));
@@ -38,7 +57,12 @@ void Connman::registerAgent(const QString &path)
 
 QStringList Connman::availableTechnologies() const
 {
-    return m_properties["AvailableTechnologies"].toStringList();
+    // TODO: replace /net/connman/technology/ from the obj path
+    QStringList technologies;
+    TechnologyList list = m_manager->GetTechnologies();
+    Q_FOREACH (const TechnologyStruct &item, list)
+        technologies.append(item.obj.path());
+    return technologies;
 }
 
 QStringList Connman::connectedTechnologies() const
@@ -71,12 +95,14 @@ QString Connman::ethernetService()
 
 void Connman::enableTechnology(const QString &type)
 {
-    m_manager->EnableTechnology(type);
+    // TODO: new api
+//    m_manager->EnableTechnology(type);
 }
 
 void Connman::disableTechnology(const QString &type)
 {
-    m_manager->DisableTechnology(type);
+    // TODO: new api
+//    m_manager->DisableTechnology(type);
 }
 
 bool Connman::isTechnologyEnabled(const QString &type)
@@ -100,7 +126,8 @@ QString Connman::technologyPath(const QString &type)
 
 void Connman::requestScan(const QString &type)
 {
-    m_manager->RequestScan(type);
+    // TODO: new api
+//    m_manager->RequestScan(type);
 }
 
 QString Connman::serviceType(const QString &service)
@@ -112,7 +139,8 @@ QString Connman::serviceType(const QString &service)
 
 void Connman::connectService(const QVariantMap &map)
 {
-    QDBusPendingReply<QDBusObjectPath> reply = m_manager->ConnectService(map);
+    // TODO: new api
+//    QDBusPendingReply<QDBusObjectPath> reply = m_manager->ConnectService(map);
 }
 
 Connman *Connman::instance()
