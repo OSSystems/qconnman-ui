@@ -137,12 +137,6 @@ QString Connman::serviceType(const QString &service)
     return properties["Type"].toString();
 }
 
-void Connman::connectService(const QVariantMap &map)
-{
-    // TODO: new api
-//    QDBusPendingReply<QDBusObjectPath> reply = m_manager->ConnectService(map);
-}
-
 Connman *Connman::instance()
 {
     if (!self)
@@ -195,5 +189,3 @@ void Connman::propertyChanged(const QString &name, const QDBusVariant &value)
 
     qDebug() << "Manager PropertyChanged" << name;
 }
-
-

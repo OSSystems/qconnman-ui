@@ -52,8 +52,6 @@ public:
 
     QString serviceType(const QString &service);
 
-    void connectService(const QVariantMap &map);
-
     static Connman *instance();
 
 signals:
