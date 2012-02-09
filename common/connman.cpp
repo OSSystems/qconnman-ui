@@ -20,6 +20,7 @@
 #include "connman.h"
 
 #include <dbus/connmanmanager.h>
+#include <dbus/connmantechnology.h>
 #include <dbus/connmanservice.h>
 
 static Connman *self = NULL;
@@ -126,8 +127,7 @@ QString Connman::technologyPath(const QString &type)
 
 void Connman::requestScan(const QString &type)
 {
-    // TODO: new api
-//    m_manager->RequestScan(type);
+    ConnmanTechnology("net.connman", type, QDBusConnection::systemBus(), this).Scan();
 }
 
 QString Connman::serviceType(const QString &service)
