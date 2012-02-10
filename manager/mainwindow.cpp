@@ -23,6 +23,8 @@
 #include "agent.h"
 #include "connman.h"
 
+#include <dbus/connmantechnology.h>
+
 #include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent):
@@ -41,13 +43,15 @@ void MainWindow::changePage(const QString &technology)
     QWidget *widget = m_pages.value(technology);
     if (!widget)
     {
-        if (technology.endsWith("ethernet"))
+        QVariantMap properties = ConnmanTechnology("net.connman", technology, QDBusConnection::systemBus(), this).GetProperties();
+
+        if (properties["Type"].toString() == "ethernet")
         {
             widget = new WiredPage(technology, this);
             ui.stackedWidget->addWidget(widget);
             m_pages.insert(technology, widget);
         }
-        else if (technology.endsWith("wifi"))
+        else if (properties["Type"].toString() == "wifi")
         {
             widget = new WirelessPage(technology, this);
             ui.stackedWidget->addWidget(widget);
