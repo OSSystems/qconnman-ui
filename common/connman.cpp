@@ -61,7 +61,6 @@ void Connman::registerAgent(const QString &path)
 
 QStringList Connman::availableTechnologies() const
 {
-    // TODO: replace /net/connman/technology/ from the obj path
     QStringList technologies;
     TechnologyList list = m_manager->GetTechnologies();
     Q_FOREACH (const TechnologyStruct &item, list)
@@ -160,14 +159,6 @@ void Connman::processConnmanProperties(QDBusPendingCallWatcher *watcher)
 
     connect(m_manager, SIGNAL(PropertyChanged(const QString &, const QDBusVariant &)),
             SLOT(propertyChanged(const QString &, const QDBusVariant &)));
-
-//    QList<QDBusObjectPath> new_services = qdbus_cast<QList<QDBusObjectPath> >(m_properties["Services"]);
-//    qDebug() << new_services.size();
-
-
-//    qDebug() << m_properties["Services"].;
-
-    emit technologiesChanged();
 }
 
 void Connman::propertyChanged(const QString &name, const QDBusVariant &value)
@@ -195,5 +186,5 @@ void Connman::propertyChanged(const QString &name, const QDBusVariant &value)
 
 void Connman::processNewTechnology(const QDBusObjectPath &obj, const QVariantMap &map)
 {
-    qDebug() << "new technology" << obj.path();
+    emit technologiesChanged();
 }

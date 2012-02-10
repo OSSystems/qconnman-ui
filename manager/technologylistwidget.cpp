@@ -29,6 +29,7 @@ TechnologyListWidget::TechnologyListWidget(QWidget *parent):
     connect(this, SIGNAL(currentRowChanged(int)), SLOT(emitItemChanged(int)));
     connect(Connman::instance(), SIGNAL(technologiesChanged()), SLOT(updateItems()));
     Connman::instance()->init();
+    updateItems();
 }
 
 void TechnologyListWidget::updateItems()
