@@ -98,14 +98,12 @@ QString Connman::ethernetService()
 
 void Connman::enableTechnology(const QString &type)
 {
-    // TODO: new api
-//    m_manager->EnableTechnology(type);
+    ConnmanTechnology("net.connman", type, QDBusConnection::systemBus(), this).SetProperty("Powered", QDBusVariant(qVariantFromValue(true)));
 }
 
 void Connman::disableTechnology(const QString &type)
 {
-    // TODO: new api
-//    m_manager->DisableTechnology(type);
+    ConnmanTechnology("net.connman", type, QDBusConnection::systemBus(), this).SetProperty("Powered", QDBusVariant(qVariantFromValue(false)));
 }
 
 bool Connman::isTechnologyEnabled(const QString &type)

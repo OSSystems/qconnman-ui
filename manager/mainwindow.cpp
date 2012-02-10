@@ -43,13 +43,13 @@ void MainWindow::changePage(const QString &technology)
     {
         if (technology.endsWith("ethernet"))
         {
-            widget = new WiredPage(this);
+            widget = new WiredPage(technology, this);
             ui.stackedWidget->addWidget(widget);
             m_pages.insert(technology, widget);
         }
         else if (technology.endsWith("wifi"))
         {
-            widget = new WirelessPage(this);
+            widget = new WirelessPage(technology, this);
             ui.stackedWidget->addWidget(widget);
             m_pages.insert(technology, widget);
         }

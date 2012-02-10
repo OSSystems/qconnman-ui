@@ -27,7 +27,7 @@ class WiredPage: public QWidget
     Q_OBJECT
 
 public:
-    WiredPage(QWidget *parent);
+    WiredPage(const QString &technology, QWidget *parent);
 
 private slots:
     void updateButtonsVisibility();
@@ -39,6 +39,7 @@ private slots:
 
 private:
     Ui::WiredPage ui;
+    QString m_technology;
 };
 
 #endif

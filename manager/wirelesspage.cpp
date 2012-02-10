@@ -29,8 +29,9 @@
 #include <QMessageBox>
 #include <QDebug>
 
-WirelessPage::WirelessPage(QWidget *parent):
-    QWidget(parent)
+WirelessPage::WirelessPage(const QString &technology, QWidget *parent):
+    QWidget(parent),
+    m_technology(technology)
 {
     ui.setupUi(this);
 

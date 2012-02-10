@@ -24,8 +24,9 @@
 
 #include <QDebug>
 
-WiredPage::WiredPage(QWidget *parent):
-    QWidget(parent)
+WiredPage::WiredPage(const QString &technology, QWidget *parent):
+    QWidget(parent),
+    m_technology(technology)
 {
     ui.setupUi(this);
 
@@ -82,9 +83,9 @@ void WiredPage::updateButtonsVisibility()
 void WiredPage::toggleTechnology(bool checked)
 {
     if (checked)
-        Connman::instance()->enableTechnology("ethernet");
+        Connman::instance()->enableTechnology(m_technology);
     else
-        Connman::instance()->disableTechnology("ethernet");
+        Connman::instance()->disableTechnology(m_technology);
 }
 
 void WiredPage::connect()

@@ -29,7 +29,7 @@ class WirelessPage: public QWidget
     Q_OBJECT
 
 public:
-    WirelessPage(QWidget *parent);
+    WirelessPage(const QString &technology, QWidget *parent);
 
 private:
     QString connectedServicePath();
@@ -46,7 +46,7 @@ private slots:
 
 private:
     Ui::WirelessPage ui;
-    Technology *m_technology;
+    QString m_technology;
 };
 
 #endif
