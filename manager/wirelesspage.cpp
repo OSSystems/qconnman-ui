@@ -61,8 +61,8 @@ QString WirelessPage::connectedServicePath()
 
 void WirelessPage::updateState()
 {
-    bool enabled = Connman::instance()->isTechnologyEnabled("wifi");
-    bool connected = Connman::instance()->connectedTechnologies().contains("wifi");
+    bool enabled = Connman::instance()->isTechnologyEnabled(m_technology);
+    bool connected = Connman::instance()->connectedTechnologies().contains(m_technology);
 
     ui.enableCheck->setChecked(enabled);
     ui.networkList->setEnabled(enabled);

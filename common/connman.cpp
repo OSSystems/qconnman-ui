@@ -70,7 +70,15 @@ QStringList Connman::availableTechnologies() const
 
 QStringList Connman::connectedTechnologies() const
 {
-    return m_properties["ConnectedTechnologies"].toStringList();
+    QStringList technologies;
+    TechnologyList list = m_manager->GetTechnologies();
+    Q_FOREACH (const TechnologyStruct &item, list)
+    {
+        QVariantMap properties = ConnmanTechnology("net.connman", item.obj.path(), QDBusConnection::systemBus()).GetProperties();
+        if (properties["Connected"].toBool())
+            technologies.append(item.obj.path());
+    }
+    return technologies;
 }
 
 QStringList Connman::services() const

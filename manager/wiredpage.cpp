@@ -43,8 +43,8 @@ WiredPage::WiredPage(const QString &technology, QWidget *parent):
 
 void WiredPage::updateButtonsVisibility()
 {
-    bool enabled = Connman::instance()->isTechnologyEnabled("ethernet");
-    bool connected = Connman::instance()->isTechnologyConnected("ethernet");
+    bool enabled = Connman::instance()->isTechnologyEnabled(m_technology);
+    bool connected = Connman::instance()->isTechnologyConnected(m_technology);
 
     ui.enableCheck->setChecked(enabled);
 
