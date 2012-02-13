@@ -116,12 +116,14 @@ void Connman::disableTechnology(const QString &type)
 
 bool Connman::isTechnologyEnabled(const QString &type)
 {
-    return m_properties["EnabledTechnologies"].toStringList().contains(type);
+    QVariantMap properties = ConnmanTechnology("net.connman", type, QDBusConnection::systemBus()).GetProperties();
+    return properties["Powered"].toBool();
 }
 
 bool Connman::isTechnologyConnected(const QString &type)
 {
-    return m_properties["ConnectedTechnologies"].toStringList().contains(type);
+    QVariantMap properties = ConnmanTechnology("net.connman", type, QDBusConnection::systemBus()).GetProperties();
+    return properties["Connected"].toBool();
 }
 
 QString Connman::technologyPath(const QString &type)

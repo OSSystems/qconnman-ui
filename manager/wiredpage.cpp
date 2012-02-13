@@ -58,16 +58,15 @@ void WiredPage::updateButtonsVisibility()
         ui.info->setText("");
     }
 
-    QString state = Technology(Connman::instance()->technologyPath("ethernet"), this).state();
-    if (state == "connected" || connected)
+    if (connected)
     {
         ui.connectButton->setEnabled(false);
         ui.disconnectButton->setEnabled(true);
         ui.status->setText(tr("Connected"));
-        ui.info->setText(tr("Wired device is connected and has the IP Address %1")
-                         .arg(Service(Connman::instance()->ethernetService(), this).ipv4Settings()["Address"].toString()));
+//        ui.info->setText(tr("Wired device is connected and has the IP Address %1")
+//                         .arg(Service(Connman::instance()->ethernetService(), this).ipv4Settings()["Address"].toString()));
     }
-    else if (enabled && (state == "offline" || !connected))
+    else
     {
         ui.connectButton->setEnabled(true);
         ui.disconnectButton->setEnabled(false);
