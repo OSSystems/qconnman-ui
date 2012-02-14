@@ -86,9 +86,9 @@ QStringList Connman::connectedTechnologies() const
 QStringList Connman::services() const
 {
     QStringList services;
-    QList<QDBusObjectPath> list = qdbus_cast<QList<QDBusObjectPath> >(m_properties["Services"]);
-    Q_FOREACH (const QDBusObjectPath &obj, list)
-        services.append(obj.path());
+    ConnmanTuple list = m_manager->GetServices();
+    Q_FOREACH (const ConnmanObject &item, list)
+        services.append(item.path.path());
     return services;
 }
 
