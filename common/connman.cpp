@@ -27,26 +27,26 @@
 
 static Connman *self = NULL;
 
-QDBusArgument &operator<<(QDBusArgument &argument, const TechnologyStruct &value)
+QDBusArgument &operator<<(QDBusArgument &argument, const ConnmanObject &value)
 {
     argument.beginStructure();
-    argument << value.obj << value.map;
+    argument << value.path << value.properties;
     argument.endStructure();
     return argument;
 }
 
-const QDBusArgument &operator>>(const QDBusArgument &argument, TechnologyStruct &value)
+const QDBusArgument &operator>>(const QDBusArgument &argument, ConnmanObject &value)
 {
     argument.beginStructure();
-    argument >> value.obj >> value.map;
+    argument >> value.path >> value.properties;
     argument.endStructure();
     return argument;
 }
 
 void Connman::init()
 {
-    qDBusRegisterMetaType<TechnologyStruct>();
-    qDBusRegisterMetaType<TechnologyList>();
+    qDBusRegisterMetaType<ConnmanObject>();
+    qDBusRegisterMetaType<ConnmanTuple>();
 
     QDBusPendingReply<QVariantMap> reply = m_manager->GetProperties();
     QDBusPendingCallWatcher *watcher = new QDBusPendingCallWatcher(reply, this);
@@ -64,21 +64,21 @@ void Connman::registerAgent(const QString &path)
 QStringList Connman::availableTechnologies() const
 {
     QStringList technologies;
-    TechnologyList list = m_manager->GetTechnologies();
-    Q_FOREACH (const TechnologyStruct &item, list)
-        technologies.append(item.obj.path());
+    ConnmanTuple list = m_manager->GetTechnologies();
+    Q_FOREACH (const ConnmanObject &item, list)
+        technologies.append(item.path.path());
     return technologies;
 }
 
 QStringList Connman::connectedTechnologies() const
 {
     QStringList technologies;
-    TechnologyList list = m_manager->GetTechnologies();
-    Q_FOREACH (const TechnologyStruct &item, list)
+    ConnmanTuple list = m_manager->GetTechnologies();
+    Q_FOREACH (const ConnmanObject &item, list)
     {
-        QVariantMap properties = ConnmanTechnology("net.connman", item.obj.path(), QDBusConnection::systemBus()).GetProperties();
+        QVariantMap properties = ConnmanTechnology("net.connman", item.path.path(), QDBusConnection::systemBus()).GetProperties();
         if (properties["Connected"].toBool())
-            technologies.append(item.obj.path());
+            technologies.append(item.path.path());
     }
     return technologies;
 }

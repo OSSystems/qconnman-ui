@@ -8,8 +8,8 @@
  * Do not edit! All changes made to it will be lost.
  */
 
-#ifndef CONNMANMANAGER_H_1328787206
-#define CONNMANMANAGER_H_1328787206
+#ifndef CONNMANMANAGER_H_1329221359
+#define CONNMANMANAGER_H_1329221359
 
 #include <QtCore/QObject>
 #include <QtCore/QByteArray>
@@ -64,13 +64,13 @@ public Q_SLOTS: // METHODS
         return asyncCallWithArgumentList(QLatin1String("GetProperties"), argumentList);
     }
 
-    inline QDBusPendingReply<QVariantMap> GetServices()
+    inline QDBusPendingReply<ConnmanTuple> GetServices()
     {
         QList<QVariant> argumentList;
         return asyncCallWithArgumentList(QLatin1String("GetServices"), argumentList);
     }
 
-    inline QDBusPendingReply<TechnologyList> GetTechnologies()
+    inline QDBusPendingReply<ConnmanTuple> GetTechnologies()
     {
         QList<QVariant> argumentList;
         return asyncCallWithArgumentList(QLatin1String("GetTechnologies"), argumentList);

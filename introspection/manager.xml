@@ -12,14 +12,14 @@
 		</method>
 		<method name="GetTechnologies">
 			<arg type="a(oa{sv})" direction="out"/>
-			<annotation name="com.trolltech.QtDBus.QtTypeName.Out0" value="TechnologyList"/>
+			<annotation name="com.trolltech.QtDBus.QtTypeName.Out0" value="ConnmanTuple"/>
 		</method>
 		<method name="RemoveProvider">
 			<arg type="o" direction="in"/>
 		</method>
 		<method name="GetServices">
 			<arg type="a(oa{sv})" direction="out"/>
-			<annotation name="com.trolltech.QtDBus.QtTypeName.Out0" value="QVariantMap"/>
+			<annotation name="com.trolltech.QtDBus.QtTypeName.Out0" value="ConnmanTuple"/>
 		</method>
 		<method name="ConnectProvider">
 			<arg type="a{sv}" direction="in"/>

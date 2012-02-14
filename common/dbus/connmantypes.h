@@ -4,16 +4,16 @@
 #include <QObject>
 #include <QList>
 
-struct TechnologyStruct
+struct ConnmanObject
 {
-	QDBusObjectPath obj;
-	QVariantMap map;
+	QDBusObjectPath path;
+	QVariantMap properties;
 };
 
-Q_DECLARE_METATYPE(TechnologyStruct);
-Q_DECLARE_METATYPE(QList<TechnologyStruct>);
+Q_DECLARE_METATYPE(ConnmanObject);
+Q_DECLARE_METATYPE(QList<ConnmanObject>);
 
-typedef QList<TechnologyStruct> TechnologyList;
+typedef QList<ConnmanObject> ConnmanTuple;
 
 #endif
 
