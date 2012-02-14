@@ -26,6 +26,7 @@
 
 class QDBusPendingCallWatcher;
 class ConnmanManager;
+class Technology;
 
 class Connman: public QObject
 {
@@ -52,6 +53,8 @@ public:
 
     QString serviceType(const QString &service);
 
+    Technology *technology(const QString &path);
+
     static Connman *instance();
 
 signals:
@@ -71,6 +74,7 @@ private slots:
 private:
     ConnmanManager *m_manager;
     QVariantMap m_properties;
+    QMap<QString, Technology *> m_technologyList;
 };
 
 #endif

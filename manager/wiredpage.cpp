@@ -37,8 +37,7 @@ WiredPage::WiredPage(const QString &technology, QWidget *parent):
     QObject::connect(ui.connectButton, SIGNAL(clicked()), SLOT(connect()));
     QObject::connect(ui.disconnectButton, SIGNAL(clicked()), SLOT(disconnect()));
 
-    QObject::connect(Connman::instance(), SIGNAL(enabledTechnologiesChanged()), SLOT(updateButtonsVisibility()));
-    QObject::connect(Connman::instance(), SIGNAL(connectedTechnologiesChanged()), SLOT(updateButtonsVisibility()));
+    QObject::connect(Connman::instance()->technology(technology), SIGNAL(stateChanged()), SLOT(updateButtonsVisibility()));
 }
 
 void WiredPage::updateButtonsVisibility()
@@ -57,14 +56,13 @@ void WiredPage::updateButtonsVisibility()
         ui.status->setText(tr("Disabled"));
         ui.info->setText("");
     }
-
-    if (connected)
+    else if (connected)
     {
         ui.connectButton->setEnabled(false);
         ui.disconnectButton->setEnabled(true);
         ui.status->setText(tr("Connected"));
-//        ui.info->setText(tr("Wired device is connected and has the IP Address %1")
-//                         .arg(Service(Connman::instance()->ethernetService(), this).ipv4Settings()["Address"].toString()));
+        ui.info->setText(tr("Wired device is connected and has the IP Address %1")
+                         .arg(Service(Connman::instance()->ethernetService(), this).ipv4Settings()["Address"].toString()));
     }
     else
     {

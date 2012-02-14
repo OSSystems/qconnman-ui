@@ -23,6 +23,8 @@
 #include <dbus/connmantechnology.h>
 #include <dbus/connmanservice.h>
 
+#include "technology.h"
+
 static Connman *self = NULL;
 
 QDBusArgument &operator<<(QDBusArgument &argument, const TechnologyStruct &value)
@@ -145,6 +147,13 @@ QString Connman::serviceType(const QString &service)
     ConnmanService c("net.connman", service, QDBusConnection::systemBus(), this);
     QVariantMap properties = c.GetProperties();
     return properties["Type"].toString();
+}
+
+Technology *Connman::technology(const QString &path)
+{
+    if (!m_technologyList.contains(path))
+        m_technologyList.insert(path, new Technology(path, this));
+    return m_technologyList[path];
 }
 
 Connman *Connman::instance()

@@ -51,7 +51,7 @@ void Technology::propertyChanged(const QString &name, const QDBusVariant &value)
 {
     m_properties[name] = value.variant();
 
-    if (name == "State")
+    if (name == "Powered" || name == "Connected")
         emit stateChanged();
 
     emit propertiesChanged();
