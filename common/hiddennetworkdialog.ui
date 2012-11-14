@@ -31,7 +31,7 @@
         <string/>
        </property>
        <property name="pixmap">
-        <pixmap resource="qconnman.qrc">:/images/network-wireless.png</pixmap>
+        <pixmap resource="qconnman-ui.qrc">:/images/network-wireless.png</pixmap>
        </property>
       </widget>
      </item>
@@ -151,7 +151,7 @@
   <tabstop>buttonBox</tabstop>
  </tabstops>
  <resources>
-  <include location="qconnman.qrc"/>
+  <include location="qconnman-ui.qrc"/>
  </resources>
  <connections>
   <connection>

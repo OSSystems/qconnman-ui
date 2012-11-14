@@ -190,7 +190,7 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="qconnman.qrc"/>
+  <include location="qconnman-ui.qrc"/>
  </resources>
  <connections/>
 </ui>

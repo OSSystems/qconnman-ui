@@ -8,7 +8,7 @@ RCC_DIR = .rcc
 
 INCLUDEPATH += .ui $$PWD/../common/
 
-RESOURCES += $$PWD/../qconnman.qrc
+RESOURCES += $$PWD/../qconnman-ui.qrc
 TRANSLATIONS = $$PWD/../i18n/pt_BR.ts
 
 translations.name = Translations ${QMAKE_FILE_BASE}

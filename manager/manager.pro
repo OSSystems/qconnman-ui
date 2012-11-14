@@ -1,4 +1,4 @@
-TARGET = qconnman
+TARGET = qconnman-ui
 
 include($$PWD/../common/common.pri)
 
