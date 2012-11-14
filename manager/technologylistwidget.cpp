@@ -21,6 +21,8 @@
 #include "technologyitemwidget.h"
 #include "connman.h"
 
+#include <qconnman/manager.h>
+
 #include <QDebug>
 
 TechnologyListWidget::TechnologyListWidget(QWidget *parent):
@@ -28,12 +30,14 @@ TechnologyListWidget::TechnologyListWidget(QWidget *parent):
 {
     connect(this, SIGNAL(currentRowChanged(int)), SLOT(emitItemChanged(int)));
     connect(Connman::instance(), SIGNAL(technologiesChanged()), SLOT(updateItems()));
-    Connman::instance()->init();
 }
 
 void TechnologyListWidget::updateItems()
 {
-    QStringList technologies = Connman::instance()->availableTechnologies();
+    QStringList technologies;
+    foreach (Technology *technology, Connman::instance()->manager()->technologies())
+        technologies.append(technology->name());
+
     foreach (const QString &technology, technologies)
     {
         bool skip = false;

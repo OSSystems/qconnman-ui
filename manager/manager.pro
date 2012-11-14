@@ -29,3 +29,5 @@ HEADERS += $$PWD/mainwindow.h \
   $$PWD/networklistwidget.h \
   $$PWD/ipv4widget.h \
   $$PWD/spinnerwidget.h
+
+LIBS += -lqconnman

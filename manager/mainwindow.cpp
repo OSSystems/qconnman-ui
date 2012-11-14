@@ -20,8 +20,8 @@
 #include "mainwindow.h"
 #include "wiredpage.h"
 #include "wirelesspage.h"
-#include "agent.h"
-#include "connman.h"
+
+#include <qconnman/manager.h>
 
 #include <QDebug>
 
@@ -30,8 +30,8 @@ MainWindow::MainWindow(QWidget *parent):
 {
     ui.setupUi(this);
 
-    new Agent(this);
-    Connman::instance()->registerAgent("/");
+//    new Agent(this);
+//    Connman::instance()->registerAgent("/");
 
     connect(ui.technologyListWidget, SIGNAL(itemChanged(const QString &)), SLOT(changePage(const QString &)));
 }

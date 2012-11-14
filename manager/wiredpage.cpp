@@ -19,8 +19,10 @@
 
 #include "wiredpage.h"
 #include "connman.h"
-#include "service.h"
-#include "technology.h"
+
+#include <qconnman/manager.h>
+#include <qconnman/technology.h>
+#include <qconnman/service.h>
 
 #include <QDebug>
 
@@ -42,8 +44,13 @@ WiredPage::WiredPage(QWidget *parent):
 
 void WiredPage::updateButtonsVisibility()
 {
-    bool enabled = Connman::instance()->isTechnologyEnabled("ethernet");
-    bool connected = Connman::instance()->isTechnologyConnected("ethernet");
+    Technology *wired = NULL;
+    foreach (Technology *technology, Connman::instance()->manager()->technologies())
+        if (technology->name() == "ethernet")
+            wired = technology;
+
+    bool enabled = wired->isPowered();
+    bool connected = wired->isConnected();
 
     ui.enableCheck->setChecked(enabled);
 
@@ -57,52 +64,72 @@ void WiredPage::updateButtonsVisibility()
         ui.info->setText("");
     }
 
-    QString state = Technology(Connman::instance()->technologyPath("ethernet"), this).state();
-    if (state == "connected" || connected)
+    if (connected)
     {
         ui.connectButton->setEnabled(false);
         ui.disconnectButton->setEnabled(true);
         ui.status->setText(tr("Connected"));
-        ui.info->setText(tr("Wired device is connected and has the IP Address %1")
-                         .arg(Service(Connman::instance()->ethernetService(), this).ipv4Settings()["Address"].toString()));
+
+        foreach (Service *service, Connman::instance()->manager()->services())
+        {
+            if ((service->state() == Service::ReadyState || service->state() == Service::OnlineState) && service->type() == "ethernet")
+            {
+                ui.info->setText(tr("Wired device is connected and has the IP Address %1")
+                                 .arg(service->ipv4()->address()));
+                ui.ipv4Widget->setSettings(service->ipv4());
+                break;
+            }
+        }
     }
-    else if (enabled && (state == "offline" || !connected))
+    else if (enabled && !connected)
     {
         ui.connectButton->setEnabled(true);
         ui.disconnectButton->setEnabled(false);
         ui.status->setText(tr("Disconnected"));
         ui.info->setText("");
     }
-
-    QString servicePath = Connman::instance()->ethernetService();
-    if (!servicePath.isEmpty())
-        ui.ipv4Widget->setSettings(Service(servicePath, this).ipv4Settings());
 }
 
 void WiredPage::toggleTechnology(bool checked)
 {
-    if (checked)
-        Connman::instance()->enableTechnology("ethernet");
-    else
-        Connman::instance()->disableTechnology("ethernet");
+    Technology *wired = NULL;
+    foreach (Technology *technology, Connman::instance()->manager()->technologies())
+        if (technology->name() == "ethernet")
+            wired = technology;
+
+    wired->setPowered(checked);
 }
 
 void WiredPage::connect()
 {
-    QString servicePath = Connman::instance()->ethernetService();
+/*    QString servicePath = Connman::instance()->ethernetService();
     if (servicePath.isEmpty())
         return;
 
     Service service(servicePath, this);
     service.setIpv4Settings(ui.ipv4Widget->toMap());
-    service.connect();
+    service.connect();*/
+
+    foreach (Service *service, Connman::instance()->manager()->services())
+    {
+        if (service->type() == "ethernet")
+        {
+            ui.ipv4Widget->apply(service);
+            service->setAutoConnect(true);
+            service->connect();
+            break;
+        }
+    }
 }
 
 void WiredPage::disconnect()
 {
-    QString service = Connman::instance()->ethernetService();
-    if (service.isEmpty())
-        return;
-
-    Service(service, this).disconnect();
+    foreach (Service *service, Connman::instance()->manager()->services())
+    {
+        if (service->type() == "ethernet")
+        {
+            service->disconnect();
+            break;
+        }
+    }
 }

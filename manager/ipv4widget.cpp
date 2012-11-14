@@ -21,15 +21,17 @@
 
 #include <QDebug>
 
+#include <qconnman/service.h>
+
 Ipv4Widget::Ipv4Widget(QWidget *parent):
     QFrame(parent)
 {
     ui.setupUi(this);
 }
 
-void Ipv4Widget::setSettings(const QVariantMap &settings)
+void Ipv4Widget::setSettings(IPV4Data *ipv4)
 {
-    if (settings.isEmpty())
+    if (!ipv4)
     {
         ui.autoIpAddress->setChecked(true);
         ui.autoDns->setChecked(true);
@@ -41,35 +43,33 @@ void Ipv4Widget::setSettings(const QVariantMap &settings)
         return;
     }
 
-    ui.autoIpAddress->setChecked(settings["Method"] == "dhcp");
-    ui.manualIpAddress->setChecked(settings["Method"] != "dhcp");
+    ui.autoIpAddress->setChecked(ipv4->method() == "dhcp");
+    ui.manualIpAddress->setChecked(ipv4->method() != "dhcp");
 
-    ui.address->setText(settings["Address"].toString());
-    ui.netmask->setText(settings["Netmask"].toString());
-    if (settings["Gateway"].toString() != "0.0.0.0")
-        ui.gateway->setText(settings["Gateway"].toString());
+    ui.address->setText(ipv4->address());
+    ui.netmask->setText(ipv4->netmask());
+    if (ipv4->gateway() != "0.0.0.0")
+        ui.gateway->setText(ipv4->gateway());
 }
 
-QVariantMap Ipv4Widget::toMap()
+void Ipv4Widget::apply(Service *service)
 {
     QVariantMap map;
 
     if (ui.autoIpAddress->isChecked())
     {
-        map["Method"] = "dhcp";
+        service->ipv4Configuration()->setMethod("dhcp");
     }
     else if (ui.manualIpAddress->isChecked())
     {
-        map["Method"] = "manual";
-        map["Address"] = ui.address->text();
-        map["Netmask"] = ui.netmask->text();
+        service->ipv4Configuration()->setMethod("manual");
+        service->ipv4Configuration()->setAddress(ui.address->text());
+        service->ipv4Configuration()->setNetmask(ui.netmask->text());
         if (ui.gateway->text().isEmpty())
-            map["Gateway"] = "0.0.0.0";
+            service->ipv4Configuration()->setGateway("0.0.0.0");
         else
-            map["Gateway"] = ui.gateway->text();
+            service->ipv4Configuration()->setGateway(ui.gateway->text());
     }
-
-    return map;
 }
 
 void Ipv4Widget::on_autoIpAddress_stateChanged(int state)

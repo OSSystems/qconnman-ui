@@ -23,6 +23,7 @@
 #include "ui_wirelesspage.h"
 
 class Technology;
+class Service;
 
 class WirelessPage: public QWidget
 {
@@ -32,7 +33,7 @@ public:
     WirelessPage(QWidget *parent);
 
 private:
-    QString connectedServicePath();
+    Service *connectedServicePath();
 
 private slots:
     void updateState();

@@ -18,7 +18,10 @@
 */
 
 #include "networkitemwidget.h"
-#include "service.h"
+#include "connman.h"
+
+#include <qconnman/manager.h>
+#include <qconnman/service.h>
 
 #include <QListWidget>
 #include <QDebug>
@@ -33,7 +36,7 @@ NetworkItemWidget::NetworkItemWidget(const QString &service, QListWidget *parent
     m_item->setSizeHint(sizeHint());
     m_item->setData(Qt::UserRole, service);
 
-    m_service = new Service(service, this);
+    m_service = Connman::instance()->manager()->service(service);
 
     update();
     toggleSpinner();
@@ -44,10 +47,11 @@ NetworkItemWidget::NetworkItemWidget(const QString &service, QListWidget *parent
 
 void NetworkItemWidget::update()
 {
-    if (!m_service->isHidden())
+    if (!m_service->name().isEmpty())
         ui.ssid->setText(m_service->name());
     else
         ui.ssid->setText("Hidden wireless network");
+
     ui.secured->setVisible(!m_service->security().contains("none"));
     ui.unsecured->setVisible(m_service->security().contains("none"));
     ui.securityIcon->setVisible(!m_service->security().contains("none"));
@@ -58,10 +62,10 @@ void NetworkItemWidget::update()
 
 void NetworkItemWidget::toggleSpinner()
 {
-    QString state = m_service->state();
-    if ((QStringList() << "ready" << "online" << "failure" << "idle" << "disconnect").contains(state))
+    Service::ServiceState state = m_service->state();
+    if (state == Service::ReadyState || state == Service::OnlineState || state == Service::FailureState || state == Service::IdleState || state == Service::DisconnectState)
         ui.spinner->setVisible(false);
-    else if ((QStringList() << "association" << "configuration").contains(state))
+    else if (state == Service::AssociationState || state == Service::ConfigurationState)
         ui.spinner->setVisible(true);
 }
 

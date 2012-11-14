@@ -20,7 +20,9 @@
 #include "networklistwidget.h"
 #include "networkitemwidget.h"
 #include "connman.h"
-#include "service.h"
+
+#include <qconnman/manager.h>
+#include <qconnman/service.h>
 
 #include <QTimer>
 #include <QDebug>
@@ -47,10 +49,13 @@ QString NetworkListWidget::selectedNetwork() const
 
 void NetworkListWidget::updateItems()
 {
-    QStringList services = Connman::instance()->services();
+    QStringList services;
+    foreach (Service *service, Connman::instance()->manager()->services())
+        services.append(service->objectPath().path());
+
     foreach (const QString &service, services)
     {
-        if (Connman::instance()->serviceType(service) != "wifi")
+        if (Connman::instance()->manager()->service(service)->type() != "wifi")
             continue;
 
         bool skip = false;
@@ -83,6 +88,6 @@ void NetworkListWidget::updateItems()
 void NetworkListWidget::scan()
 {
     qDebug("RequestScan");
-    Connman::instance()->requestScan("wifi");
+//    Connman::instance()->requestScan("wifi");
 }
 

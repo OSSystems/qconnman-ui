@@ -19,12 +19,11 @@
 
 #include "wirelesspage.h"
 #include "connman.h"
-#include "service.h"
 #include "authdialog.h"
-#include "technology.h"
 #include "hiddennetworkdialog.h"
 
-#include <dbus/connmanservice.h>
+#include <qconnman/manager.h>
+#include <qconnman/service.h>
 
 #include <QMessageBox>
 #include <QDebug>
@@ -47,21 +46,25 @@ WirelessPage::WirelessPage(QWidget *parent):
     connect(Connman::instance(), SIGNAL(connectedTechnologiesChanged()), SLOT(updateState()));
 }
 
-QString WirelessPage::connectedServicePath()
+Service *WirelessPage::connectedServicePath()
 {
-    Q_FOREACH (const QString &servicePath, Connman::instance()->services())
+    Q_FOREACH (Service *service, Connman::instance()->manager()->services())
     {
-        Service service(servicePath, this);
-        if ((QStringList() << "ready" << "online").contains(service.state()) && service.type() == "wifi")
-            return servicePath;
+        if ((service->state() == Service::ReadyState || service->state() == Service::OnlineState) && service->type() == "wifi")
+            return service;
     }
-    return QString();
+    return NULL;
 }
 
 void WirelessPage::updateState()
 {
-    bool enabled = Connman::instance()->isTechnologyEnabled("wifi");
-    bool connected = Connman::instance()->connectedTechnologies().contains("wifi");
+    Technology *wifi = NULL;
+    foreach (Technology *technology, Connman::instance()->manager()->technologies())
+        if (technology->name() == "wifi")
+            wifi = technology;
+
+    bool enabled = wifi->isPowered();
+    bool connected = wifi->isConnected();
 
     ui.enableCheck->setChecked(enabled);
     ui.networkList->setEnabled(enabled);
@@ -72,24 +75,22 @@ void WirelessPage::updateState()
         ui.info->setText("");
     }
 
-    QString state = Technology(Connman::instance()->technologyPath("wifi"), this).state();
-    if (state == "connected" || connected)
+    if (connected)
     {
         ui.status->setText(tr("Connected"));
 
-        Q_FOREACH (const QString &servicePath, Connman::instance()->services())
+        foreach (Service *service, Connman::instance()->manager()->services())
         {
-            Service service(servicePath, this);
-            if ((QStringList() << "ready" << "online").contains(service.state()) && service.type() == "wifi")
+            if ((service->state() == Service::ReadyState || service->state() == Service::OnlineState) && service->type() == "wifi")
             {
                 ui.info->setText(tr("Wireless device is connected to '%1' and has the IP Address %2")
-                                 .arg(service.name())
-                                 .arg(service.ipv4Settings()["Address"].toString()));
+                                 .arg(service->name())
+                                 .arg(service->ipv4()->address()));
                 break;
             }
         }
     }
-    else if (enabled && (state == "offline" || !connected))
+    else if (enabled && !connected)
     {
         ui.status->setText(tr("Disconnected"));
         ui.info->setText("");
@@ -102,46 +103,44 @@ void WirelessPage::updateState()
         return;
     }
 
-    Service service(connectedServicePath(), this);
-    ui.connectButton->setEnabled(service.path() != ui.networkList->selectedNetwork());
-    ui.disconnectButton->setEnabled(service.path() == ui.networkList->selectedNetwork());
+    ui.connectButton->setEnabled(connectedServicePath()->objectPath().path() != ui.networkList->selectedNetwork());
+    ui.disconnectButton->setEnabled(connectedServicePath()->objectPath().path() == ui.networkList->selectedNetwork());
 }
 
 void WirelessPage::networkListItemChanged(int row)
 {
-    if (connectedServicePath().isEmpty())
+    if (!connectedServicePath())
     {
         ui.connectButton->setEnabled(true);
         ui.disconnectButton->setEnabled(false);
         return;
     }
 
-    Service service(connectedServicePath(), this);
-    ui.connectButton->setEnabled(service.path() != ui.networkList->selectedNetwork());
-    ui.disconnectButton->setEnabled(service.path() == ui.networkList->selectedNetwork());
+    ui.connectButton->setEnabled(connectedServicePath()->objectPath().path() != ui.networkList->selectedNetwork());
+    ui.disconnectButton->setEnabled(connectedServicePath()->objectPath().path() == ui.networkList->selectedNetwork());
 }
 
 void WirelessPage::toggleTechnology(bool checked)
 {
-    if (checked)
-        Connman::instance()->enableTechnology("wifi");
-    else
-        Connman::instance()->disableTechnology("wifi");
+    Technology *wifi = NULL;
+    foreach (Technology *technology, Connman::instance()->manager()->technologies())
+        if (technology->name() == "wifi")
+            wifi = technology;
+
+    wifi->setPowered(checked);
 }
 
 void WirelessPage::connectToNetwork()
 {
-    QStringList services = Connman::instance()->services();
-    foreach (const QString &servicePath, services)
+/*    foreach (Service *service, Connman::instance()->manager()->services())
     {
-        if (Connman::instance()->serviceType(servicePath) != "wifi")
+        if (service->type() != "wifi")
             continue;
 
-        Service service(servicePath, this);
-        if (!(QStringList() << "association" << "configuration").contains(service.state()))
+        if (service->state() != Service::AssociationState || service->state() != Service::ConfigurationState)
             continue;
 
-        if (servicePath != ui.networkList->selectedNetwork())
+        if (service->objectPath().path() != ui.networkList->selectedNetwork())
             QMessageBox::warning(this, tr("Unable to connect"), tr("Can't connect to this network while another connection is being established."));
 
         return;
@@ -149,10 +148,27 @@ void WirelessPage::connectToNetwork()
 
     Service service(ui.networkList->selectedNetwork(), this);
     service.setAutoConnect(true);
-    service.connect();
+    service.connect();*/
+
+    foreach (Service *service, Connman::instance()->manager()->services())
+    {
+        if (service->objectPath().path() == ui.networkList->selectedNetwork())
+        {
+            service->setAutoConnect(true);
+            service->connect();
+            break;
+        }
+    }
 }
 
 void WirelessPage::disconnect()
 {
-    Service(ui.networkList->selectedNetwork(), this).disconnect();
+    foreach (Service *service, Connman::instance()->manager()->services())
+    {
+        if (service->objectPath().path() == ui.networkList->selectedNetwork())
+        {
+            service->disconnect();
+            break;
+        }
+    }
 }

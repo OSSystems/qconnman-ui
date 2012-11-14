@@ -22,6 +22,9 @@
 
 #include "ui_ipv4widget.h"
 
+class Service;
+class IPV4Data;
+
 class Ipv4Widget: public QFrame
 {
     Q_OBJECT
@@ -29,9 +32,9 @@ class Ipv4Widget: public QFrame
 public:
     Ipv4Widget(QWidget *parent);
 
-    void setSettings(const QVariantMap &settings);
+    void setSettings(IPV4Data *ipv4);
 
-    QVariantMap toMap();
+    void apply(Service *service);
 
 private slots:
     void on_autoIpAddress_stateChanged(int state);
