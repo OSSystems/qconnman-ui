@@ -46,7 +46,7 @@ void WiredPage::updateButtonsVisibility()
 {
     Technology *wired = NULL;
     foreach (Technology *technology, Connman::instance()->manager()->technologies())
-        if (technology->name() == "ethernet")
+        if (technology->name() == "Wired")
             wired = technology;
 
     bool enabled = wired->isPowered();
@@ -72,7 +72,7 @@ void WiredPage::updateButtonsVisibility()
 
         foreach (Service *service, Connman::instance()->manager()->services())
         {
-            if ((service->state() == Service::ReadyState || service->state() == Service::OnlineState) && service->type() == "ethernet")
+            if ((service->state() == Service::ReadyState || service->state() == Service::OnlineState) && service->type() == "Wired")
             {
                 ui.info->setText(tr("Wired device is connected and has the IP Address %1")
                                  .arg(service->ipv4()->address()));
@@ -94,7 +94,7 @@ void WiredPage::toggleTechnology(bool checked)
 {
     Technology *wired = NULL;
     foreach (Technology *technology, Connman::instance()->manager()->technologies())
-        if (technology->name() == "ethernet")
+        if (technology->name() == "Wired")
             wired = technology;
 
     wired->setPowered(checked);
