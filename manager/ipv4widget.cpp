@@ -54,8 +54,6 @@ void Ipv4Widget::setSettings(IPV4Data *ipv4)
 
 void Ipv4Widget::apply(Service *service)
 {
-    QVariantMap map;
-
     if (ui.autoIpAddress->isChecked())
     {
         service->ipv4Configuration()->setMethod("dhcp");
@@ -69,6 +67,8 @@ void Ipv4Widget::apply(Service *service)
             service->ipv4Configuration()->setGateway("0.0.0.0");
         else
             service->ipv4Configuration()->setGateway(ui.gateway->text());
+
+        service->ipv4Configuration()->apply();
     }
 }
 
