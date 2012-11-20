@@ -30,4 +30,9 @@ WiredPage::WiredPage(const QModelIndex &technology, QWidget *parent):
     QWidget(parent)
 {
     ui.setupUi(this);
+
+    // First service of ethernet technology
+    ManagerNode *node = static_cast<ManagerNode*>(technology.child(0, 0).internalPointer());
+
+    ui.ipv4Widget->setService(node->object<Service *>());
 }

@@ -23,7 +23,6 @@
 #include "ui_ipv4widget.h"
 
 class Service;
-class IPV4Data;
 
 class Ipv4Widget: public QFrame
 {
@@ -32,9 +31,8 @@ class Ipv4Widget: public QFrame
 public:
     Ipv4Widget(QWidget *parent);
 
-    void setSettings(IPV4Data *ipv4);
-
-    void apply(Service *service);
+    void setService(Service *service);
+    void applyConfiguration();
 
 private slots:
     void on_autoIpAddress_stateChanged(int state);
@@ -44,6 +42,7 @@ private slots:
 
 private:
     Ui::Ipv4Widget ui;
+    Service *m_service;
 };
 
 #endif

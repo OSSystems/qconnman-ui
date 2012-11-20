@@ -29,8 +29,12 @@ Ipv4Widget::Ipv4Widget(QWidget *parent):
     ui.setupUi(this);
 }
 
-void Ipv4Widget::setSettings(IPV4Data *ipv4)
+void Ipv4Widget::setService(Service *service)
 {
+    m_service = service;
+
+    IPV4Data *ipv4 = service->ipv4Configuration();
+
     if (!ipv4)
     {
         ui.autoIpAddress->setChecked(true);
@@ -52,23 +56,23 @@ void Ipv4Widget::setSettings(IPV4Data *ipv4)
         ui.gateway->setText(ipv4->gateway());
 }
 
-void Ipv4Widget::apply(Service *service)
+void Ipv4Widget::applyConfiguration()
 {
     if (ui.autoIpAddress->isChecked())
     {
-        service->ipv4Configuration()->setMethod("dhcp");
+        m_service->ipv4Configuration()->setMethod("dhcp");
     }
     else if (ui.manualIpAddress->isChecked())
     {
-        service->ipv4Configuration()->setMethod("manual");
-        service->ipv4Configuration()->setAddress(ui.address->text());
-        service->ipv4Configuration()->setNetmask(ui.netmask->text());
+        m_service->ipv4Configuration()->setMethod("manual");
+        m_service->ipv4Configuration()->setAddress(ui.address->text());
+        m_service->ipv4Configuration()->setNetmask(ui.netmask->text());
         if (ui.gateway->text().isEmpty())
-            service->ipv4Configuration()->setGateway("0.0.0.0");
+            m_service->ipv4Configuration()->setGateway("0.0.0.0");
         else
-            service->ipv4Configuration()->setGateway(ui.gateway->text());
+            m_service->ipv4Configuration()->setGateway(ui.gateway->text());
 
-        service->ipv4Configuration()->apply();
+        m_service->ipv4Configuration()->apply();
     }
 }
 
