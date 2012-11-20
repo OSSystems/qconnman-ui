@@ -27,15 +27,7 @@ class WiredPage: public QWidget
     Q_OBJECT
 
 public:
-    WiredPage(QWidget *parent);
-
-private slots:
-    void updateButtonsVisibility();
-
-    void toggleTechnology(bool checked);
-
-    void connect();
-    void disconnect();
+    WiredPage(const QModelIndex &technology, QWidget *parent);
 
 private:
     Ui::WiredPage ui;

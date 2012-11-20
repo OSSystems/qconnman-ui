@@ -20,6 +20,7 @@
 #include "mainwindow.h"
 #include "wiredpage.h"
 #include "wirelesspage.h"
+#include "technologyitemwidget.h"
 
 #include <qconnman/manager.h>
 
@@ -30,31 +31,54 @@ MainWindow::MainWindow(QWidget *parent):
 {
     ui.setupUi(this);
 
-//    new Agent(this);
-//    Connman::instance()->registerAgent("/");
-
-    connect(ui.technologyListWidget, SIGNAL(itemChanged(const QString &)), SLOT(changePage(const QString &)));
+    m_manager = new Manager(this);
+    connect(ui.technologyListView, SIGNAL(clicked(QModelIndex)), this, SLOT(changePage(QModelIndex)));
+//    connect(m_manager, SIGNAL(rowsInserted(QModelIndex, int ,int)),
+//            SLOT(createTechnologyItemWidgets(QModelIndex, int, int)));
+    ui.technologyListView->setModel(m_manager);
+    ui.technologyListView->setIconSize(QSize(32, 32));
+    // create initial widgets
+    //createTechnologyItemWidgets(QModelIndex(), 0, m_manager->rowCount());
 }
 
-void MainWindow::changePage(const QString &technology)
+void MainWindow::changePage(const QModelIndex &technology)
 {
-    QWidget *widget = m_pages.value(technology);
-    if (!widget)
-    {
-        if (technology == "ethernet")
-        {
-            widget = new WiredPage(this);
-            ui.stackedWidget->addWidget(widget);
-            m_pages.insert(technology, widget);
-        }
-        else if (technology == "wifi")
-        {
-            widget = new WirelessPage(this);
-            ui.stackedWidget->addWidget(widget);
-            m_pages.insert(technology, widget);
-        }
+    ManagerNode *node = static_cast<ManagerNode*>(technology.internalPointer());
+    if (!node || !node->isTechnology()) {
+        qDebug() << "something really bad happened";
+        return;
     }
 
-    ui.stackedWidget->setCurrentWidget(widget);
+    QWidget *page = m_pages.value(technology);
+    if (!page)
+    {
+        Technology *technologyObject = node->object<Technology*>();
+        QString technologyType = technologyObject->type().toLower();
+        if (technologyType == "ethernet")
+            page = new WiredPage(technology, this);
+        else if (technologyType == "wifi")
+            page = new WirelessPage(technology, m_manager, this);
+        else
+        {
+            qDebug() << "unsupported technology type: " << technologyType;
+            return;
+        }
+
+        ui.stackedWidget->addWidget(page);
+        m_pages.insert(technology, page);
+    }
+
+    ui.stackedWidget->setCurrentWidget(page);
 }
 
+void MainWindow::createTechnologyItemWidgets(const QModelIndex &parent, int start, int end)
+{
+    for (int row = start; row < end; ++row) {
+        QModelIndex index = m_manager->index(row, 0, parent);
+        ManagerNode *node = static_cast<ManagerNode*>(index.internalPointer());
+        if (node->isTechnology()) {
+            Technology *technology = node->object<Technology*>();
+            ui.technologyListView->setIndexWidget(index, new TechnologyItemWidget(technology));
+        }
+    }
+}

@@ -22,6 +22,8 @@
 
 #include "ui_mainwindow.h"
 
+class Manager;
+
 class MainWindow: public QWidget
 {
     Q_OBJECT
@@ -30,11 +32,13 @@ public:
     MainWindow(QWidget *parent = 0);
 
 private slots:
-    void changePage(const QString &technology);
+    void changePage(const QModelIndex &technology);
+    void createTechnologyItemWidgets(const QModelIndex &parent, int start, int end);
 
 private:
     Ui::MainWindow ui;
-    QMap<QString, QWidget *> m_pages;
+    Manager *m_manager;
+    QMap<QModelIndex, QWidget *> m_pages;
 };
 
 #endif

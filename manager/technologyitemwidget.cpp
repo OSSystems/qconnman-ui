@@ -19,27 +19,25 @@
 
 #include "technologyitemwidget.h"
 
+#include <qconnman/technology.h>
+
 #include <QListWidget>
 #include <QDebug>
 
-TechnologyItemWidget::TechnologyItemWidget(const QString &technology, QListWidget *parent):
+TechnologyItemWidget::TechnologyItemWidget(Technology *technology, QWidget *parent):
     QWidget(parent)
 {
     ui.setupUi(this);
 
-    if (technology == "Wired")
+    const QString &type = technology->type().toLower();
+    if (type == "ethernet")
     {
         ui.icon->setPixmap(QPixmap(":/images/network-wired.png"));
         ui.label->setText(tr("Wired"));
     }
-    else if (technology == "WiFi")
+    else if (type == "wifi")
     {
         ui.icon->setPixmap(QPixmap(":/images/network-wireless.png"));
         ui.label->setText(tr("Wireless"));
     }
-
-    m_item = new QListWidgetItem(parent);
-    parent->setItemWidget(m_item, this);
-    m_item->setSizeHint(sizeHint());
-    m_item->setData(Qt::UserRole, technology);
 }

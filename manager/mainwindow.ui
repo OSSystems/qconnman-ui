@@ -15,7 +15,7 @@
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
-    <widget class="TechnologyListWidget" name="technologyListWidget">
+    <widget class="QListView" name="technologyListView">
      <property name="minimumSize">
       <size>
        <width>220</width>
@@ -35,13 +35,6 @@
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>TechnologyListWidget</class>
-   <extends>QListWidget</extends>
-   <header>technologylistwidget.h</header>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

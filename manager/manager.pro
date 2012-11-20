@@ -11,7 +11,6 @@ FORMS += $$PWD/mainwindow.ui \
 
 SOURCES += $$PWD/main.cpp \
   $$PWD/mainwindow.cpp \
-  $$PWD/technologylistwidget.cpp \
   $$PWD/technologyitemwidget.cpp \
   $$PWD/wirelesspage.cpp \
   $$PWD/wiredpage.cpp \

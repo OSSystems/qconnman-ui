@@ -22,19 +22,17 @@
 
 #include "ui_technologyitemwidget.h"
 
-class QListWidget;
-class QListWidgetItem;
+class Technology;
 
 class TechnologyItemWidget: public QWidget
 {
     Q_OBJECT
 
 public:
-    TechnologyItemWidget(const QString &technology, QListWidget *parent);
+    TechnologyItemWidget(Technology *technology, QWidget *parent = 0);
 
 private:
     Ui::TechnologyItemWidget ui;
-    QListWidgetItem *m_item;
 };
 
 #endif

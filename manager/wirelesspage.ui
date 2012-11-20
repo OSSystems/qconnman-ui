@@ -126,7 +126,7 @@
    <item>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
-      <widget class="NetworkListWidget" name="networkList">
+      <widget class="QListView" name="serviceListView">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Expanding" vsizetype="MinimumExpanding">
          <horstretch>0</horstretch>
@@ -182,13 +182,6 @@
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>NetworkListWidget</class>
-   <extends>QListWidget</extends>
-   <header>networklistwidget.h</header>
-  </customwidget>
- </customwidgets>
  <resources>
   <include location="qconnman-ui.qrc"/>
  </resources>
