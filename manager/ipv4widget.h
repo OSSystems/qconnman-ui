@@ -36,6 +36,9 @@ public:
     void setService(Service *service);
     void applyConfiguration();
 
+    void hide();
+    void unhide();
+
 private slots:
     void on_autoIpAddress_stateChanged(int state);
     void on_manualIpAddress_toggled(bool on);

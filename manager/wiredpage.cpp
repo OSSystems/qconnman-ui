@@ -27,36 +27,70 @@
 #include <QTimer>
 #include <QDebug>
 
+static bool sorta(Service *a, Service *b)
+{
+    return a->ethernet()->interface() < b->ethernet()->interface();
+}
+
 WiredPage::WiredPage(const QModelIndex &technology, Manager *manager, QWidget *parent):
     QWidget(parent),
-    m_technology(technology)
+    m_manager(manager),
+    m_service(NULL)
 {
     ui.setupUi(this);
 
     m_wiredTechnology = static_cast<ManagerNode*>(technology.internalPointer())->object<Technology *>();
 
-    connect(manager, SIGNAL(servicesChanged()), SLOT(setIPV4WidgetService()));;
+    connect(manager, SIGNAL(servicesChanged()), SLOT(setService()));;
     connect(m_wiredTechnology, SIGNAL(poweredChanged()), SLOT(updateUi()));;
     connect(ui.enabled, SIGNAL(toggled(bool)), SLOT(toggleTechnology(bool)));
 
+    setService();
     updateUi();
 }
 
 void WiredPage::updateUi()
 {
     ui.enabled->setChecked(m_wiredTechnology->isPowered());
+    ui.advancedButton->setEnabled(m_wiredTechnology->isPowered());
+    if (m_wiredTechnology->isPowered())
+        ui.ipv4Widget->unhide();
+    else
+        ui.ipv4Widget->hide();
 }
 
-void WiredPage::setIPV4WidgetService()
+void WiredPage::setService()
 {
-    ManagerNode *node = static_cast<ManagerNode*>(m_technology.child(0, 0).internalPointer()); // First ethernet service
-    if (node && !ui.ipv4Widget->service())
-        ui.ipv4Widget->setService(node->object<Service *>());
-    else if (!node)
+    QList<Service *> ethernetServices;
+    foreach (Service *service, m_manager->services())
+    {
+        if (service->type() != "ethernet") continue;
+        if (!service->ethernet()->interface().startsWith("eth")) continue;
+        ethernetServices << service;
+    }
+
+    qSort(ethernetServices.begin(), ethernetServices.end(), sorta);
+
+    if (ethernetServices.isEmpty())
+        m_service = NULL;
+    else
+    {
+        m_service = ethernetServices.first();
+        m_service->connect();
+    }
+
+    if (m_service)
+        ui.ipv4Widget->setService(m_service);
+    else if (!m_service)
         ui.ipv4Widget->setService(NULL);
 }
 
 void WiredPage::toggleTechnology(bool enable)
 {
     m_wiredTechnology->setPowered(enable);
+    ui.advancedButton->setEnabled(enable);
+    if (enable)
+        ui.ipv4Widget->unhide();
+    else
+        ui.ipv4Widget->hide();
 }

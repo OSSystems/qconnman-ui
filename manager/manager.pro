@@ -17,7 +17,8 @@ SOURCES += $$PWD/main.cpp \
   $$PWD/networkitemwidget.cpp \
   $$PWD/networklistwidget.cpp \
   $$PWD/ipv4widget.cpp \
-  $$PWD/spinnerwidget.cpp
+  $$PWD/spinnerwidget.cpp \
+  $$PWD/widgetfilter.cpp
 
 HEADERS += $$PWD/mainwindow.h \
   $$PWD/technologylistwidget.h \
@@ -27,6 +28,7 @@ HEADERS += $$PWD/mainwindow.h \
   $$PWD/networkitemwidget.h \
   $$PWD/networklistwidget.h \
   $$PWD/ipv4widget.h \
-  $$PWD/spinnerwidget.h
+  $$PWD/spinnerwidget.h \
+  $$PWD/widgetfilter.h
 
 LIBS += -lqconnman

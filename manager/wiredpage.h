@@ -34,13 +34,15 @@ public:
 
 private slots:
     void updateUi();
-    void setIPV4WidgetService();
+    void setService();
     void toggleTechnology(bool enable);
 
 private:
     Ui::WiredPage ui;
     QModelIndex m_technology;
     Technology *m_wiredTechnology;
+    Manager *m_manager;
+    Service *m_service;
 };
 
 #endif
