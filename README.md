@@ -1,12 +1,28 @@
 # qconnman-ui - ConnMan GUI
 
-This application development was started by [O.S. Systems](https://github.com/OSSystems) and provides a Network Configuration GUI for the Connman.
-
 ![Screenshot](https://github.com/OSSystems/qconnman-ui/raw/gh-pages/images/screenshot.png "Screenshot")
+
+## Compiling
+
+Dependencies: Qt4, qconnman library (https://bitbucket.org/ossystems/qconnman)
+
+Install qconnman library:
+
+    git clone https://bitbucket.org/ossystems/qconnman.git
+    cd qconnman
+    qmake PREFIX=/usr
+    make
+    make install
+
+Then compile qconnman-ui:
+
+    cd qconnman-ui
+    qmake && make
+    ./manager/qconnman-ui
 
 ## Authors
 
-* Luis Gustavo S. Barreto (gustavo@ossystems.com.br)
+* Luis Gustavo S. Barreto (gustavo@ossystems.com.br/gustavosbarreto@gmail.com)
 
 ## License
 
