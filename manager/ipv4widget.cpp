@@ -24,7 +24,8 @@
 #include <qconnman/service.h>
 
 Ipv4Widget::Ipv4Widget(QWidget *parent):
-    QFrame(parent)
+    QFrame(parent),
+    m_service(NULL)
 {
     ui.setupUi(this);
 }
@@ -33,9 +34,9 @@ void Ipv4Widget::setService(Service *service)
 {
     m_service = service;
 
-    IPV4Data *ipv4 = service->ipv4Configuration();
+    setEnabled(service != NULL);
 
-    if (!ipv4)
+    if (!service)
     {
         ui.autoIpAddress->setChecked(true);
         ui.autoDns->setChecked(true);
@@ -46,6 +47,8 @@ void Ipv4Widget::setService(Service *service)
 
         return;
     }
+
+    IPV4Data *ipv4 = service->ipv4Configuration();
 
     ui.autoIpAddress->setChecked(ipv4->method() == "dhcp");
     ui.manualIpAddress->setChecked(ipv4->method() != "dhcp");

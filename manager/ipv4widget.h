@@ -31,6 +31,8 @@ class Ipv4Widget: public QFrame
 public:
     Ipv4Widget(QWidget *parent);
 
+    inline Service *service() const { return m_service; }
+
     void setService(Service *service);
     void applyConfiguration();
 

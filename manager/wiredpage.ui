@@ -76,7 +76,7 @@
           </spacer>
          </item>
          <item>
-          <widget class="QCheckBox" name="enableCheck">
+          <widget class="QCheckBox" name="enabled">
            <property name="text">
             <string>Enabled</string>
            </property>

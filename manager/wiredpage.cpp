@@ -24,15 +24,39 @@
 #include <qconnman/technology.h>
 #include <qconnman/service.h>
 
+#include <QTimer>
 #include <QDebug>
 
-WiredPage::WiredPage(const QModelIndex &technology, QWidget *parent):
-    QWidget(parent)
+WiredPage::WiredPage(const QModelIndex &technology, Manager *manager, QWidget *parent):
+    QWidget(parent),
+    m_technology(technology)
 {
     ui.setupUi(this);
 
-    // First service of ethernet technology
-    ManagerNode *node = static_cast<ManagerNode*>(technology.child(0, 0).internalPointer());
+    m_wiredTechnology = static_cast<ManagerNode*>(technology.internalPointer())->object<Technology *>();
 
-    ui.ipv4Widget->setService(node->object<Service *>());
+    connect(manager, SIGNAL(servicesChanged()), SLOT(setIPV4WidgetService()));;
+    connect(m_wiredTechnology, SIGNAL(poweredChanged()), SLOT(updateUi()));;
+    connect(ui.enabled, SIGNAL(toggled(bool)), SLOT(toggleTechnology(bool)));
+
+    updateUi();
+}
+
+void WiredPage::updateUi()
+{
+    ui.enabled->setChecked(m_wiredTechnology->isPowered());
+}
+
+void WiredPage::setIPV4WidgetService()
+{
+    ManagerNode *node = static_cast<ManagerNode*>(m_technology.child(0, 0).internalPointer()); // First ethernet service
+    if (node && !ui.ipv4Widget->service())
+        ui.ipv4Widget->setService(node->object<Service *>());
+    else if (!node)
+        ui.ipv4Widget->setService(NULL);
+}
+
+void WiredPage::toggleTechnology(bool enable)
+{
+    m_wiredTechnology->setPowered(enable);
 }

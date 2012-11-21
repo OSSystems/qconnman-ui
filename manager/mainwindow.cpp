@@ -32,7 +32,7 @@ MainWindow::MainWindow(QWidget *parent):
     ui.setupUi(this);
 
     m_manager = new Manager(this);
-    connect(ui.technologyListView, SIGNAL(clicked(QModelIndex)), this, SLOT(changePage(QModelIndex)));
+    connect(ui.technologyListView, SIGNAL(activated(QModelIndex)), this, SLOT(changePage(QModelIndex)));
 //    connect(m_manager, SIGNAL(rowsInserted(QModelIndex, int ,int)),
 //            SLOT(createTechnologyItemWidgets(QModelIndex, int, int)));
     ui.technologyListView->setModel(m_manager);
@@ -55,7 +55,7 @@ void MainWindow::changePage(const QModelIndex &technology)
         Technology *technologyObject = node->object<Technology*>();
         QString technologyType = technologyObject->type().toLower();
         if (technologyType == "ethernet")
-            page = new WiredPage(technology, this);
+            page = new WiredPage(technology, m_manager, this);
         else if (technologyType == "wifi")
             page = new WirelessPage(technology, m_manager, this);
         else

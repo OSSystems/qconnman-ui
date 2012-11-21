@@ -22,15 +22,25 @@
 
 #include "ui_wiredpage.h"
 
+class Technology;
+class Manager;
+
 class WiredPage: public QWidget
 {
     Q_OBJECT
 
 public:
-    WiredPage(const QModelIndex &technology, QWidget *parent);
+    WiredPage(const QModelIndex &technology, Manager *manager, QWidget *parent);
+
+private slots:
+    void updateUi();
+    void setIPV4WidgetService();
+    void toggleTechnology(bool enable);
 
 private:
     Ui::WiredPage ui;
+    QModelIndex m_technology;
+    Technology *m_wiredTechnology;
 };
 
 #endif
