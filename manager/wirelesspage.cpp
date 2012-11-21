@@ -25,14 +25,16 @@
 #include <qconnman/manager.h>
 #include <qconnman/service.h>
 
+#include <QListView>
 #include <QMessageBox>
 #include <QDebug>
+#include <QTreeView>
 
 WirelessPage::WirelessPage(const QModelIndex &technology, Manager *manager, QWidget *parent):
     QWidget(parent)
 {
     ui.setupUi(this);
 
-    ui.serviceListView->setModel(manager);
-    ui.serviceListView->setRootIndex(technology);
+    ui.listView->setModel(manager);
+    ui.listView->setRootIndex(technology);
 }
