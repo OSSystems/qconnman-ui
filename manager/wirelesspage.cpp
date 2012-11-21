@@ -35,6 +35,7 @@ WirelessPage::WirelessPage(const QModelIndex &technology, Manager *manager, QWid
 {
     ui.setupUi(this);
 
-    ui.listView->setModel(manager);
-    ui.listView->setRootIndex(technology);
+    ui.networkList->setModel(manager);
+    ui.networkList->setRootModelIndex(technology);
+    ui.networkList->setCurrentIndex(-1);
 }
