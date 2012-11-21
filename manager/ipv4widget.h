@@ -24,7 +24,7 @@
 
 class Service;
 
-class Ipv4Widget: public QFrame
+class Ipv4Widget: public QGroupBox
 {
     Q_OBJECT
 

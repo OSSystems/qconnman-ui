@@ -25,7 +25,7 @@
 #include <qconnman/service.h>
 
 Ipv4Widget::Ipv4Widget(QWidget *parent):
-    QFrame(parent),
+    QGroupBox(parent),
     m_service(NULL)
 {
     ui.setupUi(this);
