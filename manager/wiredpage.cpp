@@ -45,7 +45,10 @@ WiredPage::WiredPage(const QModelIndex &technology, Manager *manager, QWidget *p
     connect(m_wiredTechnology, SIGNAL(poweredChanged()), SLOT(updateUi()));;
     connect(ui.enabled, SIGNAL(toggled(bool)), SLOT(toggleTechnology(bool)));
 
+    ui.ipv4Widget->hide();
+
     setService();
+    serviceStateChanged();
     updateUi();
 }
 
@@ -53,10 +56,6 @@ void WiredPage::updateUi()
 {
     ui.enabled->setChecked(m_wiredTechnology->isPowered());
     ui.advancedButton->setEnabled(m_wiredTechnology->isPowered());
-    if (m_wiredTechnology->isPowered())
-        ui.ipv4Widget->unhide();
-    else
-        ui.ipv4Widget->hide();
 }
 
 void WiredPage::setService()
@@ -72,10 +71,17 @@ void WiredPage::setService()
     qSort(ethernetServices.begin(), ethernetServices.end(), sorta);
 
     if (ethernetServices.isEmpty())
+    {
+        if (m_wiredTechnology->isPowered())
+            ui.status->setText(trUtf8("Cable unplugged"));
+        ui.advancedButton->setEnabled(false);
         m_service = NULL;
+    }
     else
     {
         m_service = ethernetServices.first();
+        connect(m_service, SIGNAL(stateChanged()), SLOT(serviceStateChanged()));
+        m_service->setAutoConnect(false);
         m_service->connect();
     }
 
@@ -85,12 +91,33 @@ void WiredPage::setService()
         ui.ipv4Widget->setService(NULL);
 }
 
+void WiredPage::serviceStateChanged()
+{
+    if (!m_service)
+    {
+        ui.status->setText(trUtf8("Disconnected"));
+        return;
+    }
+
+    if (m_service->state() == Service::IdleState || m_service->state() == Service::DisconnectState)
+    {
+        ui.status->setText(trUtf8("Disconnected"));
+        ui.ipv4Widget->hide();
+    }
+    else if (m_service->state() == Service::OnlineState)
+    {
+        ui.status->setText(trUtf8("Connected"));
+        ui.ipv4Widget->unhide();
+    }
+    else if (m_service->state() == Service::ConfigurationState)
+        ui.status->setText(trUtf8("Connecting"));
+
+    if (m_service->state() == Service::ReadyState)
+        m_service->connect();
+}
+
 void WiredPage::toggleTechnology(bool enable)
 {
     m_wiredTechnology->setPowered(enable);
     ui.advancedButton->setEnabled(enable);
-    if (enable)
-        ui.ipv4Widget->unhide();
-    else
-        ui.ipv4Widget->hide();
 }

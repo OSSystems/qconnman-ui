@@ -35,6 +35,7 @@ public:
 private slots:
     void updateUi();
     void setService();
+    void serviceStateChanged();
     void toggleTechnology(bool enable);
 
 private:

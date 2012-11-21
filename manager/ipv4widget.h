@@ -34,16 +34,9 @@ public:
     inline Service *service() const { return m_service; }
 
     void setService(Service *service);
-    void applyConfiguration();
 
     void hide();
     void unhide();
-
-private slots:
-    void on_autoIpAddress_stateChanged(int state);
-    void on_manualIpAddress_toggled(bool on);
-    void on_autoDns_stateChanged(int state);
-    void on_manualDns_toggled(bool on);
 
 private:
     Ui::Ipv4Widget ui;
