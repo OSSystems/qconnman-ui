@@ -32,10 +32,12 @@ class WiredPage: public QWidget
 public:
     WiredPage(const QModelIndex &technology, Manager *manager, QWidget *parent);
 
+private:
+    QList<Service *> wiredServices();
+
 private slots:
     void updateUi();
     void configureService();
-    void serviceStateChanged();
     void toggleTechnology(bool enable);
 
     void on_advancedButton_clicked();

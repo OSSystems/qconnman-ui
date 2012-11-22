@@ -28,7 +28,7 @@
 #include <QTimer>
 #include <QDebug>
 
-static bool firstEth(Service *a, Service *b)
+static bool ethernetSort(Service *a, Service *b)
 {
     return a->ethernet()->interface() < b->ethernet()->interface();
 }
@@ -42,78 +42,69 @@ WiredPage::WiredPage(const QModelIndex &technology, Manager *manager, QWidget *p
 
     m_wiredTechnology = static_cast<ManagerNode*>(technology.internalPointer())->object<Technology *>();
 
-    connect(manager, SIGNAL(servicesChanged()), SLOT(configureService()));;
-    connect(m_wiredTechnology, SIGNAL(poweredChanged()), SLOT(updateUi()));;
+    ui.enabled->setChecked(m_wiredTechnology->isPowered());
+
+    connect(manager, SIGNAL(servicesChanged()), SLOT(configureService()));
+    connect(m_wiredTechnology, SIGNAL(dataChanged()), SLOT(updateUi()));
+    connect(m_wiredTechnology, SIGNAL(poweredChanged(bool)), ui.enabled, SLOT(setChecked(bool)));
     connect(ui.enabled, SIGNAL(toggled(bool)), SLOT(toggleTechnology(bool)));
 
     ui.ipv4Widget->hide();
 
-    configureService();
-    serviceStateChanged();
+    QList<Service *> services;
+    if (!(services = wiredServices()).isEmpty())
+        m_service = services.first();
+
     updateUi();
 }
 
-void WiredPage::updateUi()
+QList<Service *> WiredPage::wiredServices()
 {
-    ui.enabled->setChecked(m_wiredTechnology->isPowered());
-    ui.advancedButton->setEnabled(m_wiredTechnology->isPowered());
-}
-
-void WiredPage::configureService()
-{
-    QList<Service *> ethernetServices;
+    QList<Service *> services;
     foreach (Service *service, m_manager->services())
     {
         if (service->type() != "ethernet") continue;
         if (!service->ethernet()->interface().startsWith("eth")) continue;
-        ethernetServices << service;
+        services << service;
     }
 
-    qSort(ethernetServices.begin(), ethernetServices.end(), firstEth);
+    qSort(services.begin(), services.end(), ethernetSort);
 
-    if (ethernetServices.isEmpty())
+    return services;
+}
+
+void WiredPage::updateUi()
+{
+    if (m_wiredTechnology->isConnected() && m_wiredTechnology->isPowered())
     {
-        if (m_wiredTechnology->isPowered())
-            ui.status->setText(trUtf8("Cable unplugged"));
-        ui.advancedButton->setEnabled(false);
-        m_service = NULL;
+        ui.status->setText("Connected");
+        ui.ipv4Widget->setService(m_service);
+        ui.ipv4Widget->unhide();
+        ui.advancedButton->setEnabled(true);
     }
     else
     {
-        m_service = ethernetServices.first();
-        connect(m_service, SIGNAL(stateChanged()), SLOT(serviceStateChanged()));
-        m_service->setAutoConnect(true);
-        m_service->connect();
+        ui.status->setText("Disconnected");
+        ui.ipv4Widget->hide();
+        ui.advancedButton->setEnabled(false);
     }
-
-    if (m_service)
-        ui.ipv4Widget->setService(m_service);
-    else if (!m_service)
-        ui.ipv4Widget->setService(NULL);
 }
 
-void WiredPage::serviceStateChanged()
+void WiredPage::configureService()
 {
-    if (!m_service)
+    QList<Service *> services = wiredServices();
+    if (!services.isEmpty())
     {
-        ui.status->setText(trUtf8("Disconnected"));
-        return;
+        m_service = services.first();
+        updateUi();
     }
+    else
+    {
+        m_service = NULL;
 
-    if (m_service->state() == Service::IdleState)
-    {
-        ui.status->setText(trUtf8("Disconnected"));
+        ui.status->setText("Disconnected");
         ui.ipv4Widget->hide();
-    }
-    else if (m_service->state() ==  Service::ReadyState || m_service->state() == Service::OnlineState)
-    {
-        ui.status->setText(trUtf8("Connected"));
-        ui.ipv4Widget->unhide();
-    }
-    else if (m_service->state() == Service::ConfigurationState)
-    {
-        ui.advancedButton->setEnabled(true);
-        ui.status->setText(trUtf8("Connecting"));
+        ui.advancedButton->setEnabled(false);
     }
 }
 

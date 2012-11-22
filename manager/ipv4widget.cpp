@@ -35,23 +35,9 @@ void Ipv4Widget::setService(Service *service)
 {
     m_service = service;
 
-    if (!service)
-    {
-        ui.hardwareAddress->clear();
-        ui.ipAddress->clear();
-        ui.subnetMask->clear();
-        ui.gateway->clear();
-        ui.dns->clear();
-        return;
-    }
+    if (service) connect(service, SIGNAL(dataChanged()), SLOT(updateUi()));
 
-    IPV4Data *ipv4 = service->ipv4();
-
-    ui.hardwareAddress->setText(service->ethernet()->address());
-    ui.ipAddress->setText(ipv4->address());
-    ui.subnetMask->setText(ipv4->netmask());
-    ui.gateway->setText(ipv4->gateway());
-    if (!service->nameservers().isEmpty()) ui.dns->setText(service->nameservers().first());
+    updateUi();
 }
 
 void Ipv4Widget::hide()
@@ -62,4 +48,25 @@ void Ipv4Widget::hide()
 void Ipv4Widget::unhide()
 {
     WidgetFilter::instance()->unhide(this);
+}
+
+void Ipv4Widget::updateUi()
+{
+    if (!m_service)
+    {
+        ui.hardwareAddress->clear();
+        ui.ipAddress->clear();
+        ui.subnetMask->clear();
+        ui.gateway->clear();
+        ui.dns->clear();
+        return;
+    }
+
+    IPV4Data *ipv4 = m_service->ipv4();
+
+    ui.hardwareAddress->setText(m_service->ethernet()->address());
+    ui.ipAddress->setText(ipv4->address());
+    ui.subnetMask->setText(ipv4->netmask());
+    ui.gateway->setText(ipv4->gateway());
+    if (!m_service->nameservers().isEmpty()) ui.dns->setText(m_service->nameservers().first());
 }

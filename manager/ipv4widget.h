@@ -38,6 +38,9 @@ public:
     void hide();
     void unhide();
 
+private slots:
+    void updateUi();
+
 private:
     Ui::Ipv4Widget ui;
     Service *m_service;
