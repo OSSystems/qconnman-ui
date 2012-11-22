@@ -7,7 +7,8 @@ FORMS += $$PWD/mainwindow.ui \
   $$PWD/wirelesspage.ui \
   $$PWD/wiredpage.ui \
   $$PWD/networkitemwidget.ui \
-  $$PWD/ipv4widget.ui
+  $$PWD/ipv4widget.ui \
+  $$PWD/ipv4configurationdialog.ui
 
 SOURCES += $$PWD/main.cpp \
   $$PWD/mainwindow.cpp \
@@ -18,7 +19,8 @@ SOURCES += $$PWD/main.cpp \
   $$PWD/networklistwidget.cpp \
   $$PWD/ipv4widget.cpp \
   $$PWD/spinnerwidget.cpp \
-  $$PWD/widgetfilter.cpp
+  $$PWD/widgetfilter.cpp \
+  $$PWD/ipv4configurationdialog.cpp
 
 HEADERS += $$PWD/mainwindow.h \
   $$PWD/technologylistwidget.h \
@@ -29,6 +31,7 @@ HEADERS += $$PWD/mainwindow.h \
   $$PWD/networklistwidget.h \
   $$PWD/ipv4widget.h \
   $$PWD/spinnerwidget.h \
-  $$PWD/widgetfilter.h
+  $$PWD/widgetfilter.h \
+  $$PWD/ipv4configurationdialog.h
 
 LIBS += -lqconnman

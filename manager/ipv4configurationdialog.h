@@ -17,34 +17,33 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#ifndef _WIREDPAGE_H
-#define _WIREDPAGE_H
+#ifndef _IPV4CONFIGURATIONDIALOG_H
+#define _IPV4CONFIGURATIONDIALOG_H
 
-#include "ui_wiredpage.h"
+#include "ui_ipv4configurationdialog.h"
 
-class Technology;
-class Manager;
+class Service;
 
-class WiredPage: public QWidget
+class Ipv4ConfigurationDialog: public QDialog
 {
     Q_OBJECT
 
 public:
-    WiredPage(const QModelIndex &technology, Manager *manager, QWidget *parent);
+    Ipv4ConfigurationDialog(Service *service, QWidget *parent);
+
+    inline Service *service() const { return m_service; }
+
+    void setService(Service *service);
+    void applyConfiguration();
 
 private slots:
-    void updateUi();
-    void configureService();
-    void serviceStateChanged();
-    void toggleTechnology(bool enable);
-
-    void on_advancedButton_clicked();
+    void on_autoIpAddress_stateChanged(int state);
+    void on_manualIpAddress_toggled(bool on);
+    void on_autoDns_stateChanged(int state);
+    void on_manualDns_toggled(bool on);
 
 private:
-    Ui::WiredPage ui;
-    QModelIndex m_technology;
-    Technology *m_wiredTechnology;
-    Manager *m_manager;
+    Ui::Ipv4ConfigurationDialog ui;
     Service *m_service;
 };
 

@@ -18,6 +18,7 @@
 */
 
 #include "wiredpage.h"
+#include "ipv4configurationdialog.h"
 #include "connman.h"
 
 #include <qconnman/manager.h>
@@ -27,7 +28,7 @@
 #include <QTimer>
 #include <QDebug>
 
-static bool sorta(Service *a, Service *b)
+static bool firstEth(Service *a, Service *b)
 {
     return a->ethernet()->interface() < b->ethernet()->interface();
 }
@@ -41,13 +42,13 @@ WiredPage::WiredPage(const QModelIndex &technology, Manager *manager, QWidget *p
 
     m_wiredTechnology = static_cast<ManagerNode*>(technology.internalPointer())->object<Technology *>();
 
-    connect(manager, SIGNAL(servicesChanged()), SLOT(setService()));;
+    connect(manager, SIGNAL(servicesChanged()), SLOT(configureService()));;
     connect(m_wiredTechnology, SIGNAL(poweredChanged()), SLOT(updateUi()));;
     connect(ui.enabled, SIGNAL(toggled(bool)), SLOT(toggleTechnology(bool)));
 
     ui.ipv4Widget->hide();
 
-    setService();
+    configureService();
     serviceStateChanged();
     updateUi();
 }
@@ -58,7 +59,7 @@ void WiredPage::updateUi()
     ui.advancedButton->setEnabled(m_wiredTechnology->isPowered());
 }
 
-void WiredPage::setService()
+void WiredPage::configureService()
 {
     QList<Service *> ethernetServices;
     foreach (Service *service, m_manager->services())
@@ -68,7 +69,7 @@ void WiredPage::setService()
         ethernetServices << service;
     }
 
-    qSort(ethernetServices.begin(), ethernetServices.end(), sorta);
+    qSort(ethernetServices.begin(), ethernetServices.end(), firstEth);
 
     if (ethernetServices.isEmpty())
     {
@@ -81,7 +82,7 @@ void WiredPage::setService()
     {
         m_service = ethernetServices.first();
         connect(m_service, SIGNAL(stateChanged()), SLOT(serviceStateChanged()));
-        m_service->setAutoConnect(false);
+        m_service->setAutoConnect(true);
         m_service->connect();
     }
 
@@ -99,25 +100,37 @@ void WiredPage::serviceStateChanged()
         return;
     }
 
-    if (m_service->state() == Service::IdleState || m_service->state() == Service::DisconnectState)
+    if (m_service->state() == Service::IdleState)
     {
         ui.status->setText(trUtf8("Disconnected"));
         ui.ipv4Widget->hide();
     }
-    else if (m_service->state() == Service::OnlineState)
+    else if (m_service->state() ==  Service::ReadyState || m_service->state() == Service::OnlineState)
     {
         ui.status->setText(trUtf8("Connected"));
         ui.ipv4Widget->unhide();
     }
     else if (m_service->state() == Service::ConfigurationState)
+    {
+        ui.advancedButton->setEnabled(true);
         ui.status->setText(trUtf8("Connecting"));
-
-    if (m_service->state() == Service::ReadyState)
-        m_service->connect();
+    }
 }
 
 void WiredPage::toggleTechnology(bool enable)
 {
     m_wiredTechnology->setPowered(enable);
-    ui.advancedButton->setEnabled(enable);
 }
+
+void WiredPage::on_advancedButton_clicked()
+{
+    Ipv4ConfigurationDialog dialog(m_service, this);
+    if (dialog.exec() == QDialog::Accepted)
+    {
+        dialog.applyConfiguration();
+
+        m_service->disconnect();
+        m_service->connect();
+    }
+}
+
