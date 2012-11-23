@@ -38,6 +38,7 @@ private:
 private slots:
     void updateUi();
     void configureService();
+    void unconfigureService();
     void toggleTechnology(bool enable);
 
     void on_advancedButton_clicked();

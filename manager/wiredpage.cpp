@@ -35,6 +35,7 @@ static bool ethernetSort(Service *a, Service *b)
 
 WiredPage::WiredPage(const QModelIndex &technology, Manager *manager, QWidget *parent):
     QWidget(parent),
+    m_technology(technology),
     m_manager(manager),
     m_service(NULL)
 {
@@ -51,19 +52,17 @@ WiredPage::WiredPage(const QModelIndex &technology, Manager *manager, QWidget *p
 
     ui.ipv4Widget->hide();
 
-    QList<Service *> services;
-    if (!(services = wiredServices()).isEmpty())
-        m_service = services.first();
-
+    configureService();
     updateUi();
 }
 
 QList<Service *> WiredPage::wiredServices()
 {
     QList<Service *> services;
-    foreach (Service *service, m_manager->services())
+
+    for (int i = 0; i < m_technology.model()->rowCount(m_technology); i++)
     {
-        if (service->type() != "ethernet") continue;
+        Service *service = static_cast<ManagerNode *>(m_technology.child(i, 0).internalPointer())->object<Service *>();
         if (!service->ethernet()->interface().startsWith("eth")) continue;
         services << service;
     }
@@ -75,7 +74,7 @@ QList<Service *> WiredPage::wiredServices()
 
 void WiredPage::updateUi()
 {
-    if (m_wiredTechnology->isConnected() && m_wiredTechnology->isPowered())
+    if (m_service && m_wiredTechnology->isConnected() && m_wiredTechnology->isPowered())
     {
         ui.status->setText("Connected");
         ui.ipv4Widget->setService(m_service);
@@ -93,19 +92,23 @@ void WiredPage::updateUi()
 void WiredPage::configureService()
 {
     QList<Service *> services = wiredServices();
-    if (!services.isEmpty())
+    if (!services.isEmpty() && m_service != services.first())
     {
         m_service = services.first();
+        connect(m_service, SIGNAL(destroyed()), SLOT(unconfigureService()));
+
         updateUi();
     }
-    else
-    {
-        m_service = NULL;
+}
 
-        ui.status->setText("Disconnected");
-        ui.ipv4Widget->hide();
-        ui.advancedButton->setEnabled(false);
-    }
+void WiredPage::unconfigureService()
+{
+    Service *service = (Service *)QObject::sender();
+    if (!service)
+        return;
+    m_service = NULL;
+
+    updateUi();
 }
 
 void WiredPage::toggleTechnology(bool enable)
