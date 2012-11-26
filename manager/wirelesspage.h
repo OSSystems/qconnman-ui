@@ -31,8 +31,12 @@ class WirelessPage: public QWidget
 public:
     WirelessPage(const QModelIndex &technology, Manager *manager, QWidget *parent);
 
+private slots:
+    void connectToService(int index);
+
 private:
     Ui::WirelessPage ui;
+    QModelIndex m_technology;
 };
 
 #endif

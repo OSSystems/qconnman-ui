@@ -31,11 +31,21 @@
 #include <QTreeView>
 
 WirelessPage::WirelessPage(const QModelIndex &technology, Manager *manager, QWidget *parent):
-    QWidget(parent)
+    QWidget(parent),
+    m_technology(technology)
 {
     ui.setupUi(this);
 
     ui.networkList->setModel(manager);
     ui.networkList->setRootModelIndex(technology);
     ui.networkList->setCurrentIndex(-1);
+
+    connect(ui.networkList, SIGNAL(currentIndexChanged(int)), SLOT(connectToService(int)));
+}
+
+void WirelessPage::connectToService(int index)
+{
+    ManagerNode *node = static_cast<ManagerNode *>(m_technology.child(index, 1).internalPointer());
+    Service *service = node->object<Service *>();
+    service->connect();
 }

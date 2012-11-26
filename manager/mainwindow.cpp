@@ -21,8 +21,10 @@
 #include "wiredpage.h"
 #include "wirelesspage.h"
 #include "technologyitemwidget.h"
+#include "authdialog.h"
 
 #include <qconnman/manager.h>
+#include <qconnman/agent.h>
 
 #include <QDebug>
 
@@ -39,6 +41,9 @@ MainWindow::MainWindow(QWidget *parent):
     ui.technologyListView->setIconSize(QSize(32, 32));
     // create initial widgets
     //createTechnologyItemWidgets(QModelIndex(), 0, m_manager->rowCount());
+
+    Agent *agent = new Agent("/com/merda", m_manager);
+    connect(agent, SIGNAL(passphraseRequested()), (new AuthDialog(m_manager, this)), SLOT(exec()));
 }
 
 void MainWindow::changePage(const QModelIndex &technology)

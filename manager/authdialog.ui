@@ -31,14 +31,14 @@
         <string/>
        </property>
        <property name="pixmap">
-        <pixmap resource="qconnman-ui.qrc">:/images/protected.png</pixmap>
+        <pixmap>:/images/protected.png</pixmap>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QLabel" name="label">
        <property name="text">
-        <string>This network requires a %1 password to connect. Please enter the password bellow.</string>
+        <string notr="true">TextLabel</string>
        </property>
        <property name="wordWrap">
         <bool>true</bool>

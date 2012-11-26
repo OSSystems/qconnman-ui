@@ -19,15 +19,12 @@ translations.output = ${QMAKE_FILE_BASE}.qm
 translations.clean = ${QMAKE_FILE_BASE}.qm
 QMAKE_EXTRA_COMPILERS += translations
 
-FORMS = $$PWD/authdialog.ui \
-  $$PWD/hiddennetworkdialog.ui
+FORMS = $$PWD/hiddennetworkdialog.ui
 
 SOURCES += $$PWD/connman.cpp \
-  $$PWD/authdialog.cpp \
   $$PWD/hiddennetworkdialog.cpp
 
 HEADERS += $$PWD/connman.h \
-  $$PWD/authdialog.h \
   $$PWD/hiddennetworkdialog.h
 
 target.path = $$PREFIX/bin
