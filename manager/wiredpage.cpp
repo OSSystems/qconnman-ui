@@ -74,18 +74,19 @@ QList<Service *> WiredPage::wiredServices()
 
 void WiredPage::updateUi()
 {
-    if (m_service && m_wiredTechnology->isConnected() && m_wiredTechnology->isPowered())
+    ui.advancedButton->setEnabled(m_service != NULL);
+
+    if (m_service && m_wiredTechnology->isPowered() && (m_service->state() == Service::ReadyState || m_service->state() == Service::OnlineState))
     {
         ui.status->setText("Connected");
         ui.ipv4Widget->setService(m_service);
         ui.ipv4Widget->unhide();
         ui.advancedButton->setEnabled(true);
     }
-    else
+    else if (!m_service || (m_service->state() == Service::IdleState || m_service->state() == Service::DisconnectState))
     {
         ui.status->setText("Disconnected");
         ui.ipv4Widget->hide();
-        ui.advancedButton->setEnabled(false);
     }
 }
 
@@ -95,6 +96,7 @@ void WiredPage::configureService()
     if (!services.isEmpty() && m_service != services.first())
     {
         m_service = services.first();
+        connect(m_service, SIGNAL(dataChanged()), SLOT(updateUi()));
         connect(m_service, SIGNAL(destroyed()), SLOT(unconfigureService()));
 
         updateUi();
@@ -123,8 +125,13 @@ void WiredPage::on_advancedButton_clicked()
     {
         dialog.applyConfiguration();
 
-        m_service->disconnect();
-        m_service->connect();
+        if (m_service->isAutoConnect())
+        {
+            m_service->disconnect();
+            m_service->connect();
+        }
+        else
+            m_service->disconnect();
     }
 }
 

@@ -15,6 +15,13 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
+    <widget class="QCheckBox" name="autoConnect">
+     <property name="text">
+      <string>Connect automatically</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QCheckBox" name="autoIpAddress">
      <property name="text">
       <string>Obtain an IP address automatically</string>

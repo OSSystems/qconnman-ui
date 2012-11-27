@@ -31,6 +31,7 @@ Ipv4ConfigurationDialog::Ipv4ConfigurationDialog(Service *service, QWidget *pare
 
     IPV4Data *ipv4 = service->ipv4Configuration();
 
+    ui.autoConnect->setChecked(service->isAutoConnect());
     ui.autoIpAddress->setChecked(ipv4->method() == "dhcp");
     ui.manualIpAddress->setChecked(ipv4->method() != "dhcp");
 
@@ -51,6 +52,8 @@ void Ipv4ConfigurationDialog::setService(Service *service)
 
 void Ipv4ConfigurationDialog::applyConfiguration()
 {
+    m_service->setAutoConnect(ui.autoConnect->isChecked());
+
     if (ui.autoIpAddress->isChecked())
     {
         m_service->ipv4Configuration()->setMethod("dhcp");
