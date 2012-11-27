@@ -109,8 +109,6 @@ void WiredPage::unconfigureService()
     if (!service)
         return;
     m_service = NULL;
-
-    updateUi();
 }
 
 void WiredPage::toggleTechnology(bool enable)
@@ -134,4 +132,3 @@ void WiredPage::on_advancedButton_clicked()
             m_service->disconnect();
     }
 }
-
