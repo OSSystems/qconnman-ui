@@ -24,11 +24,7 @@ int AuthDialog::exec()
 
     int result = QDialog::exec();
     if (result == QDialog::Accepted)
-    {
-        QVariantMap map;
-        map["Passphrase"] = ui.password->text();
-        request->response = map;
-    }
+        request->response.passphrase = ui.password->text();
     else
         request->cancel = true;
 
