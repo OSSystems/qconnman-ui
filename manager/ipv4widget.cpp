@@ -64,6 +64,18 @@ void Ipv4Widget::updateUi()
 
     IPV4Data *ipv4 = m_service->ipv4();
 
+    if (ipv4->gateway().isEmpty())
+    {
+        ui.gatewayLabel->hide();
+        ui.gateway->hide();
+    }
+
+    if (m_service->nameservers().isEmpty())
+    {
+        ui.dnsLabel->hide();
+        ui.dns->hide();
+    }
+
     ui.hardwareAddress->setText(m_service->ethernet()->address());
     ui.ipAddress->setText(ipv4->address());
     ui.subnetMask->setText(ipv4->netmask());
