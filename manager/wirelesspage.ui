@@ -156,6 +156,13 @@
       </spacer>
      </item>
      <item>
+      <widget class="QPushButton" name="otherButton">
+       <property name="text">
+        <string>Other network..</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="advancedButton">
        <property name="text">
         <string>Advanced</string>
