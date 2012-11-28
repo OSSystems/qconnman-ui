@@ -26,6 +26,7 @@
 #include <qconnman/manager.h>
 #include <qconnman/agent.h>
 
+#include <QMessageBox>
 #include <QDebug>
 
 MainWindow::MainWindow(QWidget *parent):
@@ -42,8 +43,9 @@ MainWindow::MainWindow(QWidget *parent):
     // create initial widgets
     //createTechnologyItemWidgets(QModelIndex(), 0, m_manager->rowCount());
 
-    Agent *agent = new Agent("/com/merda", m_manager);
-    connect(agent, SIGNAL(passphraseRequested()), (new AuthDialog(m_manager, this)), SLOT(exec()));
+    m_agent = new Agent("/com/OSSystems/ConnMan", m_manager);
+    connect(m_agent, SIGNAL(passphraseRequested()), (new AuthDialog(m_manager, this)), SLOT(exec()));
+    connect(m_agent, SIGNAL(errorRaised()), SLOT(reportError()));
 }
 
 void MainWindow::changePage(const QModelIndex &technology)
@@ -86,4 +88,13 @@ void MainWindow::createTechnologyItemWidgets(const QModelIndex &parent, int star
             ui.technologyListView->setIndexWidget(index, new TechnologyItemWidget(technology));
         }
     }
+}
+
+void MainWindow::reportError()
+{
+    Agent::ErrorRequest *request = m_agent->currentErrorRequest();
+    if (request->error == "invalid-key")
+        QMessageBox::critical(this, trUtf8("Invalid password"),
+                              trUtf8("Unable to connect to '%1' wireless network because the entered password is invalid.").arg(m_manager->service(request->service)->name()));
+    qDebug() << request->error;
 }

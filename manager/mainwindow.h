@@ -23,6 +23,7 @@
 #include "ui_mainwindow.h"
 
 class Manager;
+class Agent;
 
 class MainWindow: public QWidget
 {
@@ -34,10 +35,12 @@ public:
 private slots:
     void changePage(const QModelIndex &technology);
     void createTechnologyItemWidgets(const QModelIndex &parent, int start, int end);
+    void reportError();
 
 private:
     Ui::MainWindow ui;
     Manager *m_manager;
+    Agent *m_agent;
     QMap<QModelIndex, QWidget *> m_pages;
 };
 
