@@ -19,6 +19,8 @@ int AuthDialog::exec()
     Agent *agent = qobject_cast<Agent *>(QObject::sender());
     Agent::InputRequest *request = agent->currentInputRequest();
 
+    ui.password->clear();
+    ui.password->setFocus();
     ui.label->setText(trUtf8("This network requires a %1 password to connect. Please enter the password bellow.")
                       .arg(m_manager->service(request->service)->security().join("").toUpper()));
 
