@@ -94,7 +94,13 @@ void MainWindow::reportError()
 {
     Agent::ErrorRequest *request = m_agent->currentErrorRequest();
     if (request->error == "invalid-key")
-        QMessageBox::critical(this, trUtf8("Invalid password"),
-                              trUtf8("Unable to connect to '%1' wireless network because the entered password is invalid.").arg(m_manager->service(request->service)->name()));
+    {
+        QMessageBox::StandardButton result = QMessageBox::critical(this, trUtf8("Invalid password"),
+                                                                   trUtf8("Unable to connect to '%1' wireless network because the entered password is invalid.").
+                                                                   arg(m_manager->service(request->service)->name()),
+                                                                   QMessageBox::Retry | QMessageBox::Cancel, QMessageBox::Retry);
+        request->retry = result == (QMessageBox::Retry);
+    }
+
     qDebug() << request->error;
 }
