@@ -63,7 +63,11 @@ QList<Service *> WiredPage::wiredServices()
     for (int i = 0; i < m_technology.model()->rowCount(m_technology); i++)
     {
         Service *service = static_cast<ManagerNode *>(m_technology.child(i, 0).internalPointer())->object<Service *>();
-        if (!service->ethernet()->interface().startsWith("eth")) continue;
+        if (!service->ethernet()->interface().startsWith("eth"))
+        {
+            service->setAutoConnect(false);
+            continue;
+        }
         services << service;
     }
 
