@@ -21,6 +21,7 @@
 #include "connman.h"
 #include "authdialog.h"
 #include "hiddennetworkdialog.h"
+#include "ipv4configurationdialog.h"
 
 #include <qconnman/manager.h>
 #include <qconnman/service.h>
@@ -124,3 +125,21 @@ void WirelessPage::setService(int index)
 
     m_service->connect();
 }
+
+void WirelessPage::on_advancedButton_clicked()
+{
+    Ipv4ConfigurationDialog dialog(m_service, this);
+    if (dialog.exec() == QDialog::Accepted)
+    {
+        dialog.applyConfiguration();
+
+        if (m_service->isAutoConnect())
+        {
+            m_service->disconnect();
+            m_service->connect();
+        }
+        else
+            m_service->disconnect();
+    }
+}
+

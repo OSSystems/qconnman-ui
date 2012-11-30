@@ -40,6 +40,8 @@ private slots:
     void toggleTechnology(bool enable);
     void setService(int index);
 
+    void on_advancedButton_clicked();
+
 private:
     Ui::WirelessPage ui;
     QModelIndex m_technology;
