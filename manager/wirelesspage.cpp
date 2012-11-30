@@ -47,6 +47,8 @@ WirelessPage::WirelessPage(const QModelIndex &technology, Manager *manager, QWid
     ui.networkList->setRootModelIndex(technology);
     ui.networkList->setCurrentIndex(-1);
 
+    connect(m_wireless, SIGNAL(poweredChanged(bool)), ui.enabled, SLOT(setChecked(bool)));
+    connect(m_wireless, SIGNAL(poweredChanged(bool)), SLOT(updateUi()));
     connect(manager, SIGNAL(servicesChanged()), SLOT(configureService()));
     connect(m_wireless, SIGNAL(dataChanged()), SLOT(updateUi()));
     connect(ui.enabled, SIGNAL(toggled(bool)), SLOT(toggleTechnology(bool)));
@@ -58,6 +60,9 @@ WirelessPage::WirelessPage(const QModelIndex &technology, Manager *manager, QWid
 
 void WirelessPage::updateUi()
 {
+	ui.networkList->setEnabled(m_wireless->isPowered());
+ 	ui.networkNameLabel->setEnabled(m_wireless->isPowered());
+
     ui.enabled->setChecked(m_wireless->isPowered());
 
     if (m_service && m_wireless->isPowered() && (m_service->state() == Service::ReadyState || m_service->state() == Service::OnlineState))
