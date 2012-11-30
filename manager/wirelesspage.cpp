@@ -121,4 +121,6 @@ void WirelessPage::setService(int index)
         ui.ipv4Widget->unhide();
     else
         ui.ipv4Widget->hide();
+
+    m_service->connect();
 }
