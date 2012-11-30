@@ -40,6 +40,7 @@ public:
 
 private slots:
     void updateUi();
+    void unconfigureService();
 
 private:
     Ui::Ipv4Widget ui;

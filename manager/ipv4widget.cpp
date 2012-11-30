@@ -36,6 +36,7 @@ void Ipv4Widget::setService(Service *service)
     m_service = service;
 
     if (service) connect(service, SIGNAL(dataChanged()), SLOT(updateUi()));
+    if (service) connect(service, SIGNAL(destroyed()), SLOT(unconfigureService()));
 
     updateUi();
 }
@@ -74,4 +75,9 @@ void Ipv4Widget::updateUi()
     ui.subnetMask->setText(ipv4->netmask());
     ui.gateway->setText(ipv4->gateway());
     if (!m_service->nameservers().isEmpty()) ui.dns->setText(m_service->nameservers().first());
+}
+
+void Ipv4Widget::unconfigureService()
+{
+    m_service = NULL;
 }
