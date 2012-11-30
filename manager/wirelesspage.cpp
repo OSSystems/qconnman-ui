@@ -101,10 +101,14 @@ void WirelessPage::unconfigureService()
 void WirelessPage::toggleTechnology(bool enable)
 {
     m_wireless->setPowered(enable);
+    if (!enable)
+        ui.networkList->setCurrentIndex(-1);
 }
 
 void WirelessPage::setService(int index)
 {
+	if (index == -1) return;
+
     ManagerNode *node = static_cast<ManagerNode *>(m_technology.child(index, 1).internalPointer());
     m_service = node->object<Service *>();
 
@@ -117,6 +121,4 @@ void WirelessPage::setService(int index)
         ui.ipv4Widget->unhide();
     else
         ui.ipv4Widget->hide();
-
-    m_service->connect();
 }
