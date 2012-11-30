@@ -46,6 +46,7 @@ WirelessPage::WirelessPage(const QModelIndex &technology, Manager *manager, QWid
     ui.networkList->setRootModelIndex(technology);
     ui.networkList->setCurrentIndex(-1);
 
+    connect(manager, SIGNAL(servicesChanged()), SLOT(configureService()));
     connect(m_wireless, SIGNAL(dataChanged()), SLOT(updateUi()));
     connect(ui.enabled, SIGNAL(toggled(bool)), SLOT(toggleTechnology(bool)));
     connect(ui.networkList, SIGNAL(currentIndexChanged(int)), SLOT(setService(int)));
