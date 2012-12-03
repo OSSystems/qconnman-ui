@@ -21,6 +21,7 @@
 #include "wiredpage.h"
 #include "wirelesspage.h"
 #include "authdialog.h"
+#include "hiddennetworkdialog.h"
 
 #include <qconnman/manager.h>
 #include <qconnman/agent.h>
@@ -44,6 +45,7 @@ MainWindow::MainWindow(QWidget *parent):
 
     m_agent = new Agent("/com/OSSystems/ConnMan", m_manager);
     connect(m_agent, SIGNAL(passphraseRequested()), (new AuthDialog(m_manager, this)), SLOT(exec()));
+    connect(m_agent, SIGNAL(nameRequested()), (new HiddenNetworkDialog(this)), SLOT(exec()));
     connect(m_agent, SIGNAL(errorRaised()), SLOT(reportError()));
 }
 
