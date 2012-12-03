@@ -18,9 +18,7 @@
 */
 
 #include "wirelesspage.h"
-#include "connman.h"
 #include "authdialog.h"
-#include "hiddennetworkdialog.h"
 #include "ipv4configurationdialog.h"
 
 #include <qconnman/manager.h>

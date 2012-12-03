@@ -19,7 +19,6 @@
 
 #include "wiredpage.h"
 #include "ipv4configurationdialog.h"
-#include "connman.h"
 
 #include <qconnman/manager.h>
 #include <qconnman/technology.h>

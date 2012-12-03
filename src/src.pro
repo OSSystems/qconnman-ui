@@ -1,23 +1,18 @@
+QT += dbus
+
 TARGET = qconnman-ui
 
-include($$PWD/../common/common.pri)
-
 FORMS += $$PWD/mainwindow.ui \
-  $$PWD/technologyitemwidget.ui \
   $$PWD/wirelesspage.ui \
   $$PWD/wiredpage.ui \
-  $$PWD/networkitemwidget.ui \
   $$PWD/ipv4widget.ui \
   $$PWD/ipv4configurationdialog.ui \
   $$PWD/authdialog.ui
 
 SOURCES += $$PWD/main.cpp \
   $$PWD/mainwindow.cpp \
-  $$PWD/technologyitemwidget.cpp \
   $$PWD/wirelesspage.cpp \
   $$PWD/wiredpage.cpp \
-  $$PWD/networkitemwidget.cpp \
-  $$PWD/networklistwidget.cpp \
   $$PWD/ipv4widget.cpp \
   $$PWD/spinnerwidget.cpp \
   $$PWD/widgetfilter.cpp \
@@ -25,12 +20,8 @@ SOURCES += $$PWD/main.cpp \
   $$PWD/authdialog.cpp
 
 HEADERS += $$PWD/mainwindow.h \
-  $$PWD/technologylistwidget.h \
-  $$PWD/technologyitemwidget.h \
   $$PWD/wirelesspage.h \
   $$PWD/wiredpage.h \
-  $$PWD/networkitemwidget.h \
-  $$PWD/networklistwidget.h \
   $$PWD/ipv4widget.h \
   $$PWD/spinnerwidget.h \
   $$PWD/widgetfilter.h \

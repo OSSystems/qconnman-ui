@@ -1,2 +1,2 @@
 TEMPLATE = subdirs
-SUBDIRS += manager
+SUBDIRS += src

@@ -17,26 +17,30 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#ifndef _CONNMAN_H
-#define _CONNMAN_H
+#ifndef _MAINWINDOW_H
+#define _MAINWINDOW_H
 
-#include <QObject>
+#include "ui_mainwindow.h"
 
 class Manager;
+class Agent;
 
-class Connman: public QObject
+class MainWindow: public QWidget
 {
     Q_OBJECT
 
 public:
-    inline Manager *manager() { return m_manager; }
+    MainWindow(QWidget *parent = 0);
 
-    static Connman *instance();
+private slots:
+    void changePage(const QModelIndex &technology);
+    void reportError();
 
 private:
-    Connman();
-
+    Ui::MainWindow ui;
     Manager *m_manager;
+    Agent *m_agent;
+    QMap<QModelIndex, QWidget *> m_pages;
 };
 
 #endif

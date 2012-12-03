@@ -20,7 +20,6 @@
 #include "mainwindow.h"
 #include "wiredpage.h"
 #include "wirelesspage.h"
-#include "technologyitemwidget.h"
 #include "authdialog.h"
 
 #include <qconnman/manager.h>
@@ -76,18 +75,6 @@ void MainWindow::changePage(const QModelIndex &technology)
     }
 
     ui.stackedWidget->setCurrentWidget(page);
-}
-
-void MainWindow::createTechnologyItemWidgets(const QModelIndex &parent, int start, int end)
-{
-    for (int row = start; row < end; ++row) {
-        QModelIndex index = m_manager->index(row, 0, parent);
-        ManagerNode *node = static_cast<ManagerNode*>(index.internalPointer());
-        if (node->isTechnology()) {
-            Technology *technology = node->object<Technology*>();
-            ui.technologyListView->setIndexWidget(index, new TechnologyItemWidget(technology));
-        }
-    }
 }
 
 void MainWindow::reportError()
