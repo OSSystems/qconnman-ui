@@ -38,6 +38,7 @@ WirelessPage::WirelessPage(const QModelIndex &technology, Manager *manager, QWid
 
     m_wireless = static_cast<ManagerNode*>(technology.internalPointer())->object<Technology *>();
 
+    ui.icon->setPixmap(QIcon::fromTheme("network-wireless").pixmap(QSize(48, 48)));
     ui.enabled->setChecked(m_wireless->isPowered());
     ui.advancedButton->setEnabled(false);
     ui.ipv4Widget->hide();

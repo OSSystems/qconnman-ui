@@ -42,6 +42,7 @@ WiredPage::WiredPage(const QModelIndex &technology, Manager *manager, QWidget *p
 
     m_wiredTechnology = static_cast<ManagerNode*>(technology.internalPointer())->object<Technology *>();
 
+    ui.icon->setPixmap(QIcon::fromTheme("network-wired").pixmap(QSize(48, 48)));
     ui.enabled->setChecked(m_wiredTechnology->isPowered());
 
     connect(manager, SIGNAL(servicesChanged()), SLOT(configureService()));
