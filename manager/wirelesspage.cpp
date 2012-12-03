@@ -41,6 +41,7 @@ WirelessPage::WirelessPage(const QModelIndex &technology, Manager *manager, QWid
     m_wireless = static_cast<ManagerNode*>(technology.internalPointer())->object<Technology *>();
 
     ui.enabled->setChecked(m_wireless->isPowered());
+    ui.advancedButton->setEnabled(false);
     ui.ipv4Widget->hide();
 
     ui.networkList->setModel(manager);
@@ -113,7 +114,13 @@ void WirelessPage::toggleTechnology(bool enable)
 
 void WirelessPage::setService(int index)
 {
-	if (index == -1) return;
+	if (index == -1) 
+    {
+        ui.advancedButton->setEnabled(false);
+        return;
+    }
+
+    ui.advancedButton->setEnabled(true);
 
     ManagerNode *node = static_cast<ManagerNode *>(m_technology.child(index, 1).internalPointer());
     m_service = node->object<Service *>();
