@@ -160,6 +160,7 @@ void WirelessPage::on_advancedButton_clicked()
 void WirelessPage::on_clearButton_clicked()
 {
     QMessageBox::StandardButton result = QMessageBox::question(this, trUtf8("Are you sure?"),
-                                                               trUtf8("Are you sure want to delete details of this network including password and any other configuration?"));
+                                                               trUtf8("Are you sure want to delete details of this network including password and any other configuration?"),
+                                                               QMessageBox::Yes | QMessageBox::No);
     if (result == QMessageBox::Yes) m_service->remove();
 }
