@@ -29,6 +29,7 @@ FORMS += $$PWD/mainwindow.ui \
   $$PWD/hiddennetworkdialog.ui
 
 SOURCES += $$PWD/main.cpp \
+  $$PWD/connman.cpp \
   $$PWD/mainwindow.cpp \
   $$PWD/wirelesspage.cpp \
   $$PWD/wiredpage.cpp \
@@ -39,7 +40,8 @@ SOURCES += $$PWD/main.cpp \
   $$PWD/authdialog.cpp \
   $$PWD/hiddennetworkdialog.cpp
 
-HEADERS += $$PWD/mainwindow.h \
+HEADERS += $$PWD/connman.h \
+  $$PWD/mainwindow.h \
   $$PWD/wirelesspage.h \
   $$PWD/wiredpage.h \
   $$PWD/ipv4widget.h \

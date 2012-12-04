@@ -19,6 +19,7 @@
 
 #include "wiredpage.h"
 #include "ipv4configurationdialog.h"
+#include "connman.h"
 
 #include <qconnman/manager.h>
 #include <qconnman/technology.h>
@@ -32,7 +33,7 @@ static bool ethernetSort(Service *a, Service *b)
     return a->ethernet()->interface() < b->ethernet()->interface();
 }
 
-WiredPage::WiredPage(const QModelIndex &technology, Manager *manager, QWidget *parent):
+WiredPage::WiredPage(const QModelIndex &technology, ConnMan *manager, QWidget *parent):
     QWidget(parent),
     m_technology(technology),
     m_manager(manager),

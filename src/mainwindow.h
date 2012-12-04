@@ -22,7 +22,7 @@
 
 #include "ui_mainwindow.h"
 
-class Manager;
+class ConnMan;
 class Agent;
 
 class MainWindow: public QWidget
@@ -38,7 +38,7 @@ private slots:
 
 private:
     Ui::MainWindow ui;
-    Manager *m_manager;
+    ConnMan *m_manager;
     Agent *m_agent;
     QMap<QModelIndex, QWidget *> m_pages;
 };

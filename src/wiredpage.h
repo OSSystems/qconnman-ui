@@ -23,14 +23,14 @@
 #include "ui_wiredpage.h"
 
 class Technology;
-class Manager;
+class ConnMan;
 
 class WiredPage: public QWidget
 {
     Q_OBJECT
 
 public:
-    WiredPage(const QModelIndex &technology, Manager *manager, QWidget *parent);
+    WiredPage(const QModelIndex &technology, ConnMan *manager, QWidget *parent);
 
 private:
     QList<Service *> wiredServices();
@@ -47,7 +47,7 @@ private:
     Ui::WiredPage ui;
     QModelIndex m_technology;
     Technology *m_wiredTechnology;
-    Manager *m_manager;
+    ConnMan *m_manager;
     Service *m_service;
 };
 

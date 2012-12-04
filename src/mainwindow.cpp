@@ -22,8 +22,8 @@
 #include "wirelesspage.h"
 #include "authdialog.h"
 #include "hiddennetworkdialog.h"
+#include "connman.h"
 
-#include <qconnman/manager.h>
 #include <qconnman/agent.h>
 
 #include <QMessageBox>
@@ -34,7 +34,7 @@ MainWindow::MainWindow(QWidget *parent):
 {
     ui.setupUi(this);
 
-    m_manager = new Manager(this);
+    m_manager = new ConnMan(this);
     connect(ui.technologyListView, SIGNAL(activated(QModelIndex)), this, SLOT(changePage(QModelIndex)));
 //    connect(m_manager, SIGNAL(rowsInserted(QModelIndex, int ,int)),
 //            SLOT(createTechnologyItemWidgets(QModelIndex, int, int)));

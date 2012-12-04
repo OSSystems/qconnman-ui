@@ -22,7 +22,7 @@
 
 #include "ui_wirelesspage.h"
 
-class Manager;
+class ConnMan;
 class Technology;
 class Service;
 
@@ -31,7 +31,7 @@ class WirelessPage: public QWidget
     Q_OBJECT
 
 public:
-    WirelessPage(const QModelIndex &technology, Manager *manager, QWidget *parent);
+    WirelessPage(const QModelIndex &technology, ConnMan *manager, QWidget *parent);
 
 private slots:
     void updateUi();

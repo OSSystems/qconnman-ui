@@ -3,14 +3,14 @@
 
 #include "ui_authdialog.h"
 
-class Manager;
+class ConnMan;
 
 class AuthDialog: public QDialog
 {
     Q_OBJECT
 
 public:
-    AuthDialog(Manager *manager, QWidget *parent);
+    AuthDialog(ConnMan *manager, QWidget *parent);
 
 public slots:
     int exec();
@@ -20,7 +20,7 @@ private slots:
 
 private:
     Ui::AuthDialog ui;
-    Manager *m_manager;
+    ConnMan *m_manager;
 };
 
 #endif

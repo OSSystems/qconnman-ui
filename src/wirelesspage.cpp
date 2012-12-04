@@ -20,8 +20,8 @@
 #include "wirelesspage.h"
 #include "authdialog.h"
 #include "ipv4configurationdialog.h"
+#include "connman.h"
 
-#include <qconnman/manager.h>
 #include <qconnman/service.h>
 
 #include <QListView>
@@ -29,7 +29,7 @@
 #include <QDebug>
 #include <QTreeView>
 
-WirelessPage::WirelessPage(const QModelIndex &technology, Manager *manager, QWidget *parent):
+WirelessPage::WirelessPage(const QModelIndex &technology, ConnMan *manager, QWidget *parent):
     QWidget(parent),
     m_technology(technology),
     m_service(NULL)

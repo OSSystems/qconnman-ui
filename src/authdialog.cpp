@@ -1,11 +1,11 @@
 #include "authdialog.h"
+#include "connman.h"
 
-#include <qconnman/manager.h>
 #include <qconnman/agent.h>
 
 #include <QDebug>
 
-AuthDialog::AuthDialog(Manager *manager, QWidget *parent):
+AuthDialog::AuthDialog(ConnMan *manager, QWidget *parent):
     QDialog(parent),
     m_manager(manager)
 {
