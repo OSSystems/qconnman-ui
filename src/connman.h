@@ -5,6 +5,8 @@
 
 class ConnMan: public Manager
 {
+    Q_OBJECT
+
 public:
     ConnMan(QObject *parent);
 
