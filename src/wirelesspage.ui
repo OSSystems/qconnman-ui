@@ -122,6 +122,19 @@
        </property>
       </widget>
      </item>
+     <item>
+      <widget class="QToolButton" name="clearButton">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="text">
+        <string>...</string>
+       </property>
+       <property name="icon">
+        <iconset theme="edit-clear"/>
+       </property>
+      </widget>
+     </item>
     </layout>
    </item>
    <item>
@@ -154,6 +167,13 @@
         </size>
        </property>
       </spacer>
+     </item>
+     <item>
+      <widget class="QPushButton" name="otherNetworkButton">
+       <property name="text">
+        <string>Other network...</string>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QPushButton" name="advancedButton">

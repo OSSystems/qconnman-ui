@@ -116,6 +116,7 @@ void WirelessPage::setService(int index)
 	if (index == -1) 
     {
         ui.advancedButton->setEnabled(false);
+        ui.clearButton->setEnabled(false);
         return;
     }
 
@@ -123,6 +124,8 @@ void WirelessPage::setService(int index)
 
     ManagerNode *node = static_cast<ManagerNode *>(m_technology.child(index, 1).internalPointer());
     m_service = node->object<Service *>();
+
+    ui.clearButton->setEnabled(m_service->isFavorite());
 
     ui.ipv4Widget->setService(m_service);
 
@@ -154,3 +157,9 @@ void WirelessPage::on_advancedButton_clicked()
     }
 }
 
+void WirelessPage::on_clearButton_clicked()
+{
+    QMessageBox::StandardButton result = QMessageBox::question(this, trUtf8("Are you sure?"),
+                                                               trUtf8("Are you sure want to delete details of this network including password and any other configuration?"));
+    if (result == QMessageBox::Yes) m_service->remove();
+}

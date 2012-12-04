@@ -41,6 +41,7 @@ private slots:
     void setService(int index);
 
     void on_advancedButton_clicked();
+    void on_clearButton_clicked();
 
 private:
     Ui::WirelessPage ui;
