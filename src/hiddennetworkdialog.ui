@@ -35,7 +35,7 @@
      <item>
       <widget class="QLabel" name="label">
        <property name="text">
-        <string>Enter information for the %1 hidden wireless network.</string>
+        <string>Enter the name of the hidden network you wish to connect to.</string>
        </property>
        <property name="wordWrap">
         <bool>true</bool>

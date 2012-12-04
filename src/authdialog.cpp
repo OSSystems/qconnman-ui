@@ -19,10 +19,15 @@ int AuthDialog::exec()
     Agent *agent = qobject_cast<Agent *>(QObject::sender());
     Agent::InputRequest *request = agent->currentInputRequest();
 
+    Service *service = m_manager->service(request->service);
+
     ui.password->clear();
     ui.password->setFocus();
-    ui.label->setText(trUtf8("This network requires a %1 password to connect. Please enter the password bellow.")
-                      .arg(m_manager->service(request->service)->security().join("").toUpper()));
+
+    if (!service->name().isEmpty())
+        ui.label->setText(trUtf8("The '%1' network requires an access password.").arg(service->name()));
+    else
+        ui.label->setText(trUtf8("The '%1' network requires an access password.").arg(request->response.name));
 
     int result = QDialog::exec();
     if (result == QDialog::Accepted)
