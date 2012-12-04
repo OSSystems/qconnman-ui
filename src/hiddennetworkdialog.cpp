@@ -19,30 +19,29 @@
 
 #include "hiddennetworkdialog.h"
 
+#include <qconnman/agent.h>
+
 HiddenNetworkDialog::HiddenNetworkDialog(QWidget *parent):
     QDialog(parent)
 {
     ui.setupUi(this);
 
-//    ui.label->setText(ui.label->text().arg(security));
-
-    connect(ui.showPassword, SIGNAL(toggled(bool)), SLOT(showPassword(bool)));
+    ui.icon->setPixmap(QIcon::fromTheme("network-wireless").pixmap(QSize(48, 48)));
 }
 
-QVariantMap HiddenNetworkDialog::toMap()
+int HiddenNetworkDialog::exec()
 {
-    QVariantMap map;
-    map["Name"] = ui.networkName->text();
-    map["SSID"] = ui.networkName->text();
-    map["Passphrase"] = ui.password->text();
-    return map;
-}
+    Agent *agent = qobject_cast<Agent *>(QObject::sender());
+    Agent::InputRequest *request = agent->currentInputRequest();
 
-void HiddenNetworkDialog::showPassword(bool checked)
-{
-    if (!checked)
-        ui.password->setEchoMode(QLineEdit::Password);
+    ui.name->clear();
+    ui.name->setFocus();
+
+    int result = QDialog::exec();
+    if (result == QDialog::Accepted)
+        request->response.name = ui.name->text();
     else
-        ui.password->setEchoMode(QLineEdit::Normal);
-}
+        request->cancel = true;
 
+    return result;
+}

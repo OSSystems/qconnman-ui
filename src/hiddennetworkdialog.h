@@ -29,10 +29,8 @@ class HiddenNetworkDialog: public QDialog
 public:
     HiddenNetworkDialog(QWidget *parent);
 
-    QVariantMap toMap();
-
-private slots:
-    void showPassword(bool checked);
+public slots:
+    int exec();
 
 private:
     Ui::HiddenNetworkDialog ui;
