@@ -18,13 +18,27 @@
 */
 
 #include "hiddennetworkdialog.h"
+#include "connman.h"
 
 #include <qconnman/agent.h>
 
-HiddenNetworkDialog::HiddenNetworkDialog(QWidget *parent):
-    QDialog(parent)
+HiddenNetworkDialog::HiddenNetworkDialog(ConnMan *manager, QWidget *parent):
+    QDialog(parent),
+    m_manager(manager)
 {
     ui.setupUi(this);
 
     ui.icon->setPixmap(QIcon::fromTheme("network-wireless").pixmap(QSize(48, 48)));
+
+    foreach (Service *service, manager->services())
+    {
+        if (service->type() == "wifi" && service->name().isEmpty())
+        {
+            if (service->security().contains("none"))
+                ui.networkList->addItem(trUtf8("Unsecured wireless network"), qVariantFromValue(service));
+            else
+                ui.networkList->addItem(trUtf8("Security-enabled wireless network (%1)").
+                                        arg(service->security().join(" ").toUpper()), qVariantFromValue(service));
+        }
+    }
 }

@@ -33,6 +33,7 @@
 WirelessPage::WirelessPage(const QModelIndex &technology, ConnMan *manager, QWidget *parent):
     QWidget(parent),
     m_technology(technology),
+    m_manager(manager),
     m_service(NULL)
 {
     ui.setupUi(this);
@@ -168,6 +169,6 @@ void WirelessPage::on_clearButton_clicked()
 
 void WirelessPage::on_otherNetworkButton_clicked()
 {
-    HiddenNetworkDialog d(this);
+    HiddenNetworkDialog d(m_manager, this);
     d.exec();
 }

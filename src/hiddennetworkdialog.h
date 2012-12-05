@@ -22,15 +22,18 @@
 
 #include "ui_hiddennetworkdialog.h"
 
+class ConnMan;
+
 class HiddenNetworkDialog: public QDialog
 {
     Q_OBJECT
 
 public:
-    HiddenNetworkDialog(QWidget *parent);
+    HiddenNetworkDialog(ConnMan *manager, QWidget *parent);
 
 private:
     Ui::HiddenNetworkDialog ui;
+    ConnMan *m_manager;
 };
 
 #endif

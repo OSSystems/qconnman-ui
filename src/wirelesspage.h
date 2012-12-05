@@ -47,6 +47,7 @@ private slots:
 private:
     Ui::WirelessPage ui;
     QModelIndex m_technology;
+    ConnMan *m_manager;
     Technology *m_wireless;
     Service *m_service;
 };

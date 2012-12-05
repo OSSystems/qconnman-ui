@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>346</width>
-    <height>117</height>
+    <height>109</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -85,7 +85,7 @@
         </widget>
        </item>
        <item row="0" column="1">
-        <widget class="QComboBox" name="comboBox"/>
+        <widget class="QComboBox" name="networkList"/>
        </item>
       </layout>
      </item>
