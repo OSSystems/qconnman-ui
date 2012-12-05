@@ -5,6 +5,7 @@
 ConnMan::ConnMan(QObject *parent):
     Manager(false, parent)
 {
+    initialize();
 }
 
 QIcon ConnMan::serviceIcon(Service *service) const
