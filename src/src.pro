@@ -26,7 +26,7 @@ FORMS += $$PWD/mainwindow.ui \
   $$PWD/ipv4widget.ui \
   $$PWD/ipv4configurationdialog.ui \
   $$PWD/authdialog.ui \
-  $$PWD/hiddennetworkdialog.ui
+  $$PWD/hiddennetworkinputdialog.ui
 
 SOURCES += $$PWD/main.cpp \
   $$PWD/connman.cpp \
@@ -38,7 +38,7 @@ SOURCES += $$PWD/main.cpp \
   $$PWD/widgetfilter.cpp \
   $$PWD/ipv4configurationdialog.cpp \
   $$PWD/authdialog.cpp \
-  $$PWD/hiddennetworkdialog.cpp
+  $$PWD/hiddennetworkinputdialog.cpp
 
 HEADERS += $$PWD/connman.h \
   $$PWD/mainwindow.h \
@@ -49,7 +49,7 @@ HEADERS += $$PWD/connman.h \
   $$PWD/widgetfilter.h \
   $$PWD/ipv4configurationdialog.h \
   $$PWD/authdialog.h \
-  $$PWD/hiddennetworkdialog.h
+  $$PWD/hiddennetworkinputdialog.h
 
 LIBS += -lqconnman
 

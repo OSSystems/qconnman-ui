@@ -17,23 +17,23 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#ifndef _HIDDENNETWORKDIALOG_H
-#define _HIDDENNETWORKDIALOG_H
+#ifndef _HIDDENNETWORKINPUTDIALOG_H
+#define _HIDDENNETWORKINPUTDIALOG_H
 
-#include "ui_hiddennetworkdialog.h"
+#include "ui_hiddennetworkinputdialog.h"
 
-class HiddenNetworkDialog: public QDialog
+class HiddenNetworkInputDialog: public QDialog
 {
     Q_OBJECT
 
 public:
-    HiddenNetworkDialog(QWidget *parent);
+    HiddenNetworkInputDialog(QWidget *parent);
 
 public slots:
     int exec();
 
 private:
-    Ui::HiddenNetworkDialog ui;
+    Ui::HiddenNetworkInputDialog ui;
 };
 
 #endif

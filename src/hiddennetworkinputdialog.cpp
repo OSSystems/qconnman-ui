@@ -17,11 +17,11 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#include "hiddennetworkdialog.h"
+#include "hiddennetworkinputdialog.h"
 
 #include <qconnman/agent.h>
 
-HiddenNetworkDialog::HiddenNetworkDialog(QWidget *parent):
+HiddenNetworkInputDialog::HiddenNetworkInputDialog(QWidget *parent):
     QDialog(parent)
 {
     ui.setupUi(this);
@@ -29,7 +29,7 @@ HiddenNetworkDialog::HiddenNetworkDialog(QWidget *parent):
     ui.icon->setPixmap(QIcon::fromTheme("network-wireless").pixmap(QSize(48, 48)));
 }
 
-int HiddenNetworkDialog::exec()
+int HiddenNetworkInputDialog::exec()
 {
     Agent *agent = qobject_cast<Agent *>(QObject::sender());
     Agent::InputRequest *request = agent->currentInputRequest();
