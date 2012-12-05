@@ -31,6 +31,9 @@ class HiddenNetworkDialog: public QDialog
 public:
     HiddenNetworkDialog(ConnMan *manager, QWidget *parent);
 
+public slots:
+    int exec();
+
 private:
     Ui::HiddenNetworkDialog ui;
     ConnMan *m_manager;

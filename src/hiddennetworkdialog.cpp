@@ -42,3 +42,15 @@ HiddenNetworkDialog::HiddenNetworkDialog(ConnMan *manager, QWidget *parent):
         }
     }
 }
+
+int HiddenNetworkDialog::exec()
+{
+    int result = QDialog::exec();
+    if (result == QDialog::Accepted)
+    {
+        Service *service = qvariant_cast<Service *>(ui.networkList->itemData(ui.networkList->currentIndex()));
+        service->connect();
+    }
+
+    return result;
+}
