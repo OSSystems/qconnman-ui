@@ -17,38 +17,14 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#ifndef _WIRELESSPAGE_H
-#define _WIRELESSPAGE_
+#include "hiddennetworkdialog.h"
 
-#include "ui_wirelesspage.h"
+#include <qconnman/agent.h>
 
-class ConnMan;
-class Technology;
-class Service;
-
-class WirelessPage: public QWidget
+HiddenNetworkDialog::HiddenNetworkDialog(QWidget *parent):
+    QDialog(parent)
 {
-    Q_OBJECT
+    ui.setupUi(this);
 
-public:
-    WirelessPage(const QModelIndex &technology, ConnMan *manager, QWidget *parent);
-
-private slots:
-    void updateUi();
-    void configureService();
-    void unconfigureService();
-    void toggleTechnology(bool enable);
-    void setService(int index);
-
-    void on_advancedButton_clicked();
-    void on_clearButton_clicked();
-    void on_otherNetworkButton_clicked();
-
-private:
-    Ui::WirelessPage ui;
-    QModelIndex m_technology;
-    Technology *m_wireless;
-    Service *m_service;
-};
-
-#endif
+    ui.icon->setPixmap(QIcon::fromTheme("network-wireless").pixmap(QSize(48, 48)));
+}

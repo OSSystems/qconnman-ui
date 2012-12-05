@@ -21,6 +21,7 @@
 #include "authdialog.h"
 #include "ipv4configurationdialog.h"
 #include "connman.h"
+#include "hiddennetworkdialog.h"
 
 #include <qconnman/service.h>
 
@@ -163,4 +164,10 @@ void WirelessPage::on_clearButton_clicked()
                                                                trUtf8("Are you sure want to delete details of this network including password and any other configuration?"),
                                                                QMessageBox::Yes | QMessageBox::No);
     if (result == QMessageBox::Yes) m_service->remove();
+}
+
+void WirelessPage::on_otherNetworkButton_clicked()
+{
+    HiddenNetworkDialog d(this);
+    d.exec();
 }
