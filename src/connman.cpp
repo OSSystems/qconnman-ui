@@ -3,7 +3,7 @@
 #include <QIcon>
 
 ConnMan::ConnMan(QObject *parent):
-    Manager(parent)
+    Manager(false, parent)
 {
 }
 
