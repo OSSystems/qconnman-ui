@@ -8,6 +8,15 @@ ConnMan::ConnMan(QObject *parent):
     initialize();
 }
 
+QString ConnMan::technologyName(Technology *technology) const
+{
+    if (technology->type() == "wifi")
+        return trUtf8("Wireless");
+    if (technology->type() == "ethernet")
+        return trUtf8("Wired");
+    return Manager::technologyName(technology);
+}
+
 QIcon ConnMan::serviceIcon(Service *service) const
 {
     if (service->type().toLower() == "wifi")

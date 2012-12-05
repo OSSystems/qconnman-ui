@@ -14,6 +14,8 @@ protected:
     inline virtual QStringList ignoredTechnologies() const { return QStringList() << "bluetooth"; }
     inline virtual bool ignoreHiddenNetworks() const { return true; }
 
+    virtual QString technologyName(Technology *technology) const;
+
     virtual QIcon serviceIcon(Service *service) const;
 };
 
