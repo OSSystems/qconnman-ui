@@ -86,6 +86,8 @@ void WirelessPage::updateUi()
 
 void WirelessPage::configureService()
 {
+    if (!m_technology.isValid()) return;
+
     for (int i = 0; i < m_technology.model()->rowCount(m_technology); i++)
     {
         Service *service = static_cast<ManagerNode *>(m_technology.child(i, 0).internalPointer())->object<Service *>();
