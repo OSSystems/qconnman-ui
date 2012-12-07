@@ -2,250 +2,251 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="pt_BR">
 <context>
-    <name>Agent</name>
-    <message>
-        <location filename="../src/agent.cpp" line="83"/>
-        <source>Invalid password</source>
-        <translation>Senha inválida</translation>
-    </message>
-    <message>
-        <location filename="../src/agent.cpp" line="84"/>
-        <source>Unable to connect to &apos;%1&apos; wireless network because the entered password is invalid.</source>
-        <translation>Não foi possível conectar a rede sem fios &apos;%1&apos; porque a senha informada é inválida.</translation>
-    </message>
-</context>
-<context>
     <name>AuthDialog</name>
     <message>
-        <location filename="../ui/authdialog.ui" line="14"/>
+        <location filename="../src/authdialog.ui" line="14"/>
         <source>Authentication</source>
         <translation>Autenticação</translation>
     </message>
     <message>
-        <location filename="../ui/authdialog.ui" line="41"/>
-        <source>This network requires a %1 password to connect. Please enter the password bellow.</source>
-        <translation>Uma senha %1 é necessária para conectar a essa rede. Por favor digite a senha a baixo.</translation>
-    </message>
-    <message>
-        <location filename="../ui/authdialog.ui" line="86"/>
+        <location filename="../src/authdialog.ui" line="86"/>
         <source>Password:</source>
         <translation>Senha:</translation>
     </message>
     <message>
-        <location filename="../ui/authdialog.ui" line="100"/>
+        <location filename="../src/authdialog.ui" line="100"/>
         <source>Show password</source>
         <translation>Mostrar senha</translation>
+    </message>
+    <message>
+        <location filename="../src/authdialog.cpp" line="28"/>
+        <location filename="../src/authdialog.cpp" line="30"/>
+        <source>The &apos;%1&apos; network requires an access password.</source>
+        <translation>A rede &apos;%1&apos; requer uma senha de acesso.</translation>
+    </message>
+</context>
+<context>
+    <name>ConnMan</name>
+    <message>
+        <location filename="../src/connman.cpp" line="14"/>
+        <source>Wireless</source>
+        <translation>Sem fios</translation>
+    </message>
+    <message>
+        <location filename="../src/connman.cpp" line="16"/>
+        <source>Wired</source>
+        <translation>Com fios</translation>
     </message>
 </context>
 <context>
     <name>HiddenNetworkDialog</name>
     <message>
-        <location filename="../ui/hiddennetworkdialog.ui" line="14"/>
+        <location filename="../src/hiddennetworkdialog.ui" line="14"/>
         <source>Hidden wireless network</source>
         <translation>Rede sem fios oculta</translation>
     </message>
     <message>
-        <location filename="../ui/hiddennetworkdialog.ui" line="41"/>
-        <source>Enter information for the %1 hidden wireless network.</source>
-        <translation>Entre com as informações da rede sem fios %1 oculta.</translation>
+        <location filename="../src/hiddennetworkdialog.ui" line="38"/>
+        <source>Select the hidden wireless network you wish to connect to.</source>
+        <translation>Selecione a rede wireless oculta que você deseja conectar.</translation>
     </message>
     <message>
-        <location filename="../ui/hiddennetworkdialog.ui" line="86"/>
-        <source>Password:</source>
-        <translation>Senha:</translation>
+        <location filename="../src/hiddennetworkdialog.ui" line="83"/>
+        <source>Wireless network:</source>
+        <translation>Rede sem fios: </translation>
     </message>
     <message>
-        <location filename="../ui/hiddennetworkdialog.ui" line="100"/>
-        <source>Show password</source>
-        <translation>Mostrar senha</translation>
+        <location filename="../src/hiddennetworkdialog.cpp" line="38"/>
+        <source>Unsecured wireless network</source>
+        <translation>Rede sem fio insegura</translation>
     </message>
     <message>
-        <location filename="../ui/hiddennetworkdialog.ui" line="107"/>
+        <location filename="../src/hiddennetworkdialog.cpp" line="40"/>
+        <source>Security-enabled wireless network (%1)</source>
+        <translation>Rede sem fio segura (%1)</translation>
+    </message>
+</context>
+<context>
+    <name>HiddenNetworkInputDialog</name>
+    <message>
+        <location filename="../src/hiddennetworkinputdialog.ui" line="14"/>
+        <source>Hidden wireless network</source>
+        <translation>Rede sem fios oculta</translation>
+    </message>
+    <message>
+        <location filename="../src/hiddennetworkinputdialog.ui" line="38"/>
+        <source>Enter the name of the hidden network you wish to connect to.</source>
+        <translation>Digite o nome da rede oculta que você deseja conectar.</translation>
+    </message>
+    <message>
+        <location filename="../src/hiddennetworkinputdialog.ui" line="83"/>
         <source>Network name:</source>
         <translation>Nome da rede:</translation>
     </message>
 </context>
 <context>
-    <name>Ipv4Widget</name>
+    <name>Ipv4ConfigurationDialog</name>
     <message>
-        <location filename="../ui/ipv4widget.ui" line="26"/>
+        <location filename="../src/ipv4configurationdialog.ui" line="20"/>
         <source>Obtain an IP address automatically</source>
         <translation>Obter um endereço IP automaticamente</translation>
     </message>
     <message>
-        <location filename="../ui/ipv4widget.ui" line="45"/>
+        <location filename="../src/ipv4configurationdialog.ui" line="39"/>
         <source>Use the following IP address:</source>
         <translation>Usar o seguinte endereço IP:</translation>
     </message>
     <message>
-        <location filename="../ui/ipv4widget.ui" line="66"/>
+        <location filename="../src/ipv4configurationdialog.ui" line="60"/>
         <source>IP address:</source>
         <translation>Endereço IP:</translation>
     </message>
     <message>
-        <location filename="../ui/ipv4widget.ui" line="83"/>
+        <location filename="../src/ipv4configurationdialog.ui" line="77"/>
         <source>Subnet mask:</source>
         <translation>Máscara de sub-rede:</translation>
     </message>
     <message>
-        <location filename="../ui/ipv4widget.ui" line="100"/>
+        <location filename="../src/ipv4configurationdialog.ui" line="94"/>
         <source>Default gateway:</source>
         <translation>Gateway padrão:</translation>
     </message>
     <message>
-        <location filename="../ui/ipv4widget.ui" line="120"/>
+        <location filename="../src/ipv4configurationdialog.ui" line="114"/>
         <source>Obtain DNS server address automatically</source>
         <translation>Obter o endereço dos servidores DNS automaticamente</translation>
     </message>
     <message>
-        <location filename="../ui/ipv4widget.ui" line="136"/>
+        <location filename="../src/ipv4configurationdialog.ui" line="130"/>
         <source>Use the following DNS server addresses:</source>
         <translation>Usar os seguintes endereços de servidor DNS:</translation>
     </message>
     <message>
-        <location filename="../ui/ipv4widget.ui" line="157"/>
+        <location filename="../src/ipv4configurationdialog.ui" line="151"/>
         <source>Preferred DNS server:</source>
         <translation>Servidor DNS preferencial:</translation>
     </message>
     <message>
-        <location filename="../ui/ipv4widget.ui" line="174"/>
+        <location filename="../src/ipv4configurationdialog.ui" line="168"/>
         <source>Alternate DNS server:</source>
         <translation>Servidor DNS alternativo:</translation>
+    </message>
+    <message>
+        <location filename="../src/ipv4configurationdialog.ui" line="203"/>
+        <source>Connect automatically</source>
+        <translation>Conectar automaticamente</translation>
+    </message>
+</context>
+<context>
+    <name>Ipv4Widget</name>
+    <message>
+        <location filename="../src/ipv4widget.ui" line="47"/>
+        <source>Hardware address:</source>
+        <translation>Endereço de hardware:</translation>
+    </message>
+    <message>
+        <location filename="../src/ipv4widget.ui" line="54"/>
+        <source>IP address:</source>
+        <translation>Endereço IP:</translation>
+    </message>
+    <message>
+        <location filename="../src/ipv4widget.ui" line="68"/>
+        <source>Subnet mask:</source>
+        <translation>Máscara de sub-rede:</translation>
+    </message>
+    <message>
+        <location filename="../src/ipv4widget.ui" line="82"/>
+        <source>Default gateway:</source>
+        <translation>Gateway padrão:</translation>
+    </message>
+    <message>
+        <location filename="../src/ipv4widget.ui" line="96"/>
+        <source>DNS:</source>
+        <translation>DNS:</translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../ui/mainwindow.ui" line="14"/>
+        <location filename="../src/mainwindow.ui" line="14"/>
         <source>Network Configuration</source>
         <translation>Configuração de rede</translation>
     </message>
-</context>
-<context>
-    <name>NetworkItemWidget</name>
     <message>
-        <location filename="../ui/networkitemwidget.ui" line="152"/>
-        <location filename="../src/networkitemwidget.cpp" line="54"/>
-        <source>Security-enabled network (%1)</source>
-        <translation>Rede segura (%1)</translation>
+        <location filename="../src/mainwindow.cpp" line="87"/>
+        <source>Invalid password</source>
+        <translation>Senha inválida</translation>
     </message>
     <message>
-        <location filename="../ui/networkitemwidget.ui" line="164"/>
-        <source>Unsecured network</source>
-        <translation>Rede insegura</translation>
-    </message>
-</context>
-<context>
-    <name>TechnologyItemWidget</name>
-    <message>
-        <location filename="../src/technologyitemwidget.cpp" line="33"/>
-        <source>Wired</source>
-        <translation>Com fios</translation>
-    </message>
-    <message>
-        <location filename="../src/technologyitemwidget.cpp" line="38"/>
-        <source>Wireless</source>
-        <translation>Sem fios</translation>
+        <location filename="../src/mainwindow.cpp" line="88"/>
+        <source>Unable to connect to &apos;%1&apos; wireless network because the entered password is invalid.</source>
+        <translation>Não foi possível conectar a rede sem fios &apos;%1&apos; porque a senha informada é inválida.</translation>
     </message>
 </context>
 <context>
     <name>WiredPage</name>
     <message>
-        <location filename="../ui/wiredpage.ui" line="54"/>
-        <source>Status:</source>
-        <translation>Estado:</translation>
+        <location filename="../src/wiredpage.ui" line="64"/>
+        <source>Wired</source>
+        <translation>Com fios</translation>
     </message>
     <message>
-        <location filename="../ui/wiredpage.ui" line="61"/>
-        <location filename="../src/wiredpage.cpp" line="65"/>
+        <location filename="../src/wiredpage.ui" line="71"/>
         <source>Connected</source>
         <translation>Conectado</translation>
     </message>
     <message>
-        <location filename="../ui/wiredpage.ui" line="81"/>
+        <location filename="../src/wiredpage.ui" line="93"/>
         <source>Enabled</source>
         <translation>Habilitado</translation>
     </message>
     <message>
-        <location filename="../ui/wiredpage.ui" line="97"/>
-        <location filename="../src/wiredpage.cpp" line="66"/>
-        <source>Wired device is connected and has the IP Address %1</source>
-        <translation>Dispositivo com fios está conectado com o endereço IP %1</translation>
-    </message>
-    <message>
-        <location filename="../ui/wiredpage.ui" line="176"/>
-        <source>Connect</source>
-        <translation>Conectar</translation>
-    </message>
-    <message>
-        <location filename="../ui/wiredpage.ui" line="183"/>
-        <source>Disconnect</source>
-        <translation>Desconectar</translation>
-    </message>
-    <message>
-        <location filename="../src/wiredpage.cpp" line="56"/>
-        <source>Disabled</source>
-        <translation>Desabilitado</translation>
-    </message>
-    <message>
-        <location filename="../src/wiredpage.cpp" line="73"/>
-        <source>Disconnected</source>
-        <translation>Desconectado</translation>
+        <location filename="../src/wiredpage.ui" line="137"/>
+        <source>Advanced</source>
+        <translation>Avançado</translation>
     </message>
 </context>
 <context>
     <name>WirelessPage</name>
     <message>
-        <location filename="../ui/wirelesspage.ui" line="54"/>
-        <source>Status:</source>
-        <translation>Estado:</translation>
+        <location filename="../src/wirelesspage.ui" line="64"/>
+        <source>Wireless</source>
+        <translation>Sem fios</translation>
     </message>
     <message>
-        <location filename="../ui/wirelesspage.ui" line="61"/>
-        <location filename="../src/wirelesspage.cpp" line="78"/>
+        <location filename="../src/wirelesspage.ui" line="71"/>
         <source>Connected</source>
         <translation>Conectado</translation>
     </message>
     <message>
-        <location filename="../ui/wirelesspage.ui" line="81"/>
+        <location filename="../src/wirelesspage.ui" line="93"/>
         <source>Enabled</source>
         <translation>Habilitado</translation>
     </message>
     <message>
-        <location filename="../ui/wirelesspage.ui" line="97"/>
-        <location filename="../src/wirelesspage.cpp" line="85"/>
-        <source>Wireless device is connected to &apos;%1&apos; and has the IP Address %2</source>
-        <translation>Dispositivo sem fios está conectado a &apos;%1&apos; com o endereço IP %2</translation>
+        <location filename="../src/wirelesspage.ui" line="111"/>
+        <source>Network name:</source>
+        <translation>Nome da rede:</translation>
     </message>
     <message>
-        <location filename="../ui/wirelesspage.ui" line="165"/>
-        <source>Connect</source>
-        <translation>Conectar</translation>
+        <location filename="../src/wirelesspage.ui" line="179"/>
+        <source>Other network..</source>
+        <translation>Outra rede..</translation>
     </message>
     <message>
-        <location filename="../ui/wirelesspage.ui" line="175"/>
-        <source>Disconnect</source>
-        <translation>Desconectar</translation>
+        <location filename="../src/wirelesspage.ui" line="186"/>
+        <source>Advanced</source>
+        <translation>Avançado</translation>
     </message>
     <message>
-        <location filename="../src/wirelesspage.cpp" line="71"/>
-        <source>Disabled</source>
-        <translation>Desabilitado</translation>
+        <location filename="../src/wirelesspage.cpp" line="169"/>
+        <source>Are you sure?</source>
+        <translation>Você tem certeza?</translation>
     </message>
     <message>
-        <location filename="../src/wirelesspage.cpp" line="94"/>
-        <source>Disconnected</source>
-        <translation>Desconectado</translation>
-    </message>
-    <message>
-        <location filename="../src/wirelesspage.cpp" line="145"/>
-        <source>Unable to connect</source>
-        <translation>Não foi possível conectar</translation>
-    </message>
-    <message>
-        <location filename="../src/wirelesspage.cpp" line="145"/>
-        <source>Can&apos;t connect to this network while another connection is being established.</source>
-        <translation>Não é possível conectar a esta rede enquanto outra conexão estiver sendo estabelecida.</translation>
+        <location filename="../src/wirelesspage.cpp" line="170"/>
+        <source>Are you sure want to delete details of this network including password and any other configuration?</source>
+        <translation>Você tem certeza que quer apagar os detalhes dessa rede incluindo senhas e quaisquer outras configurações?</translation>
     </message>
 </context>
 </TS>
