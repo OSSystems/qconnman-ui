@@ -191,9 +191,14 @@
         <translation>Com fios</translation>
     </message>
     <message>
-        <location filename="../src/wiredpage.ui" line="71"/>
+        <location filename="../src/wiredpage.cpp" line="86"/>
         <source>Connected</source>
         <translation>Conectado</translation>
+    </message>
+    <message>
+        <location filename="../src/wiredpage.cpp" line="93"/>
+        <source>Disconnected</source>
+        <translation>Desconectado</translation>
     </message>
     <message>
         <location filename="../src/wiredpage.ui" line="93"/>
@@ -214,7 +219,7 @@
         <translation>Sem fios</translation>
     </message>
     <message>
-        <location filename="../src/wirelesspage.ui" line="71"/>
+        <location filename="../src/wirelesspage.cpp" line="75"/>
         <source>Connected</source>
         <translation>Conectado</translation>
     </message>
@@ -237,6 +242,11 @@
         <location filename="../src/wirelesspage.ui" line="186"/>
         <source>Advanced</source>
         <translation>Avançado</translation>
+    </message>
+    <message>
+        <location filename="../src/wirelesspage.cpp" line="82"/>
+        <source>Disconnected</source>
+        <translation>Desconectado</translation>
     </message>
     <message>
         <location filename="../src/wirelesspage.cpp" line="169"/>

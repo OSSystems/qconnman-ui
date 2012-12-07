@@ -72,14 +72,14 @@ void WirelessPage::updateUi()
 
     if (m_service && m_wireless->isPowered() && (m_service->state() == Service::ReadyState || m_service->state() == Service::OnlineState))
     {
-        ui.status->setText("Connected");
+        ui.status->setText(trUtf8("Connected"));
         ui.ipv4Widget->setService(m_service);
         ui.ipv4Widget->unhide();
         ui.advancedButton->setEnabled(true);
     }
     else if (!m_service || (m_service->state() == Service::IdleState || m_service->state() == Service::DisconnectState))
     {
-        ui.status->setText("Disconnected");
+        ui.status->setText(trUtf8("Disconnected"));
         ui.ipv4Widget->hide();
     }
 }

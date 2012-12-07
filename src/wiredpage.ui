@@ -68,7 +68,7 @@
            <item>
             <widget class="QLabel" name="status">
              <property name="text">
-              <string>Connected</string>
+              <string notr="true">Status</string>
              </property>
             </widget>
            </item>
