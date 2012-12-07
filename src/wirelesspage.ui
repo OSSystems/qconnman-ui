@@ -131,7 +131,9 @@
         <string>...</string>
        </property>
        <property name="icon">
-        <iconset theme="edit-clear"/>
+        <iconset theme="edit-clear">
+         <normaloff/>
+        </iconset>
        </property>
       </widget>
      </item>
@@ -170,6 +172,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="otherNetworkButton">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string>Other network...</string>
        </property>
