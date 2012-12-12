@@ -40,8 +40,8 @@ MainWindow::MainWindow(QWidget *parent):
     ui.technologyListView->setModel(m_manager);
     ui.technologyListView->setIconSize(QSize(32, 32));
 
-    connect(ui.technologyListView->selectionModel(), SIGNAL(selectionChanged(const QItemSelection &, const QItemSelection &)),
-            SLOT(changePage(const QItemSelection &, const QItemSelection &)));
+    connect(ui.technologyListView->selectionModel(), SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)),
+            SLOT(changePage(const QModelIndex &, const QModelIndex &)));
 
     ui.technologyListView->selectionModel()->select(m_manager->index(0, 0), QItemSelectionModel::SelectCurrent);
 
@@ -54,10 +54,8 @@ MainWindow::MainWindow(QWidget *parent):
     connect(m_agent, SIGNAL(errorRaised()), SLOT(reportError()));
 }
 
-void MainWindow::changePage(const QItemSelection &selected, const QItemSelection &deselected)
+void MainWindow::changePage(const QModelIndex &technology, const QModelIndex &previous)
 {
-    const QModelIndex technology = selected.indexes()[0];
-
     ManagerNode *node = static_cast<ManagerNode*>(technology.internalPointer());
     if (!node || !node->isTechnology()) {
         qDebug() << "something really bad happened";

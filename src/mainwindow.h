@@ -33,7 +33,7 @@ public:
     MainWindow(QWidget *parent = 0);
 
 private slots:
-    void changePage(const QItemSelection &selected, const QItemSelection &deselected);
+    void changePage(const QModelIndex &selected, const QModelIndex &previous);
     void reportError();
 
 private:
