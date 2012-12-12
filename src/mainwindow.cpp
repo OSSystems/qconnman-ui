@@ -35,11 +35,16 @@ MainWindow::MainWindow(QWidget *parent):
     ui.setupUi(this);
 
     m_manager = new ConnMan(this);
-    connect(ui.technologyListView, SIGNAL(activated(QModelIndex)), this, SLOT(changePage(QModelIndex)));
 //    connect(m_manager, SIGNAL(rowsInserted(QModelIndex, int ,int)),
 //            SLOT(createTechnologyItemWidgets(QModelIndex, int, int)));
     ui.technologyListView->setModel(m_manager);
     ui.technologyListView->setIconSize(QSize(32, 32));
+
+    connect(ui.technologyListView->selectionModel(), SIGNAL(selectionChanged(const QItemSelection &, const QItemSelection &)),
+            SLOT(changePage(const QItemSelection &, const QItemSelection &)));
+
+    ui.technologyListView->selectionModel()->select(m_manager->index(0, 0), QItemSelectionModel::SelectCurrent);
+
     // create initial widgets
     //createTechnologyItemWidgets(QModelIndex(), 0, m_manager->rowCount());
 
@@ -49,8 +54,10 @@ MainWindow::MainWindow(QWidget *parent):
     connect(m_agent, SIGNAL(errorRaised()), SLOT(reportError()));
 }
 
-void MainWindow::changePage(const QModelIndex &technology)
+void MainWindow::changePage(const QItemSelection &selected, const QItemSelection &deselected)
 {
+    const QModelIndex technology = selected.indexes()[0];
+
     ManagerNode *node = static_cast<ManagerNode*>(technology.internalPointer());
     if (!node || !node->isTechnology()) {
         qDebug() << "something really bad happened";
