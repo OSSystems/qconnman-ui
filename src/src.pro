@@ -1,5 +1,9 @@
 QT += dbus
 
+greaterThan(QT_MAJOR_VERSION, 4) {
+    QT += widgets
+}
+
 TARGET = qconnman-ui
 
 target.path = $$PREFIX/bin
