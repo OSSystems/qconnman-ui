@@ -25,6 +25,8 @@
 #include "connman.h"
 
 #include <qconnman/agent.h>
+#include <qconnman/managerinterface.h>
+#include <qconnman/manager_p.h>
 
 #include <QMessageBox>
 #include <QDebug>

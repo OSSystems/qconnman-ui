@@ -24,6 +24,8 @@
 #include <qconnman/manager.h>
 #include <qconnman/technology.h>
 #include <qconnman/service.h>
+#include <qconnman/managerinterface.h>
+#include <qconnman/manager_p.h>
 
 #include <QTimer>
 #include <QDebug>

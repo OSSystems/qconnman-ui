@@ -24,6 +24,8 @@
 #include "hiddennetworkdialog.h"
 
 #include <qconnman/service.h>
+#include <qconnman/managerinterface.h>
+#include <qconnman/manager_p.h>
 
 #include <QListView>
 #include <QMessageBox>
