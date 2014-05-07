@@ -24,8 +24,7 @@
 #include "hiddennetworkdialog.h"
 
 #include <qconnman/service.h>
-#include <qconnman/managerinterface.h>
-#include <qconnman/manager_p.h>
+#include <qconnman/manager.h>
 
 #include <QListView>
 #include <QMessageBox>
@@ -40,7 +39,8 @@ WirelessPage::WirelessPage(const QModelIndex &technology, ConnMan *manager, QWid
 {
     ui.setupUi(this);
 
-    m_wireless = static_cast<ManagerNode*>(technology.internalPointer())->object<Technology *>();
+    m_wireless =
+        technology.data(Manager::TechnologyRole).value<Technology*>();
 
     ui.icon->setPixmap(QIcon::fromTheme("network-wireless").pixmap(QSize(48, 48)));
     ui.enabled->setChecked(m_wireless->isPowered());
@@ -66,8 +66,8 @@ WirelessPage::WirelessPage(const QModelIndex &technology, ConnMan *manager, QWid
 
 void WirelessPage::updateUi()
 {
-	ui.networkList->setEnabled(m_wireless->isPowered());
- 	ui.networkNameLabel->setEnabled(m_wireless->isPowered());
+    ui.networkList->setEnabled(m_wireless->isPowered());
+    ui.networkNameLabel->setEnabled(m_wireless->isPowered());
     ui.otherNetworkButton->setEnabled(m_wireless->isPowered());
 
     ui.enabled->setChecked(m_wireless->isPowered());
@@ -90,9 +90,9 @@ void WirelessPage::configureService()
 {
     if (!m_technology.isValid()) return;
 
-    for (int i = 0; i < m_technology.model()->rowCount(m_technology); i++)
-    {
-        Service *service = static_cast<ManagerNode *>(m_technology.child(i, 0).internalPointer())->object<Service *>();
+    for (int i = 0; i < m_technology.model()->rowCount(m_technology); i++) {
+        QModelIndex idx = m_technology.child(i, 0);
+        Service *service = idx.data(Manager::ServiceRole).value<Service*>();
         if (service->type() != "wifi") continue;
 
         if (service->state() == Service::ReadyState || service->state() == Service::OnlineState)
@@ -122,7 +122,7 @@ void WirelessPage::toggleTechnology(bool enable)
 
 void WirelessPage::setService(int index)
 {
-	if (index == -1) 
+    if (index == -1)
     {
         ui.advancedButton->setEnabled(false);
         ui.clearButton->setEnabled(false);
@@ -131,8 +131,8 @@ void WirelessPage::setService(int index)
 
     ui.advancedButton->setEnabled(true);
 
-    ManagerNode *node = static_cast<ManagerNode *>(m_technology.child(index, 1).internalPointer());
-    m_service = node->object<Service *>();
+    QModelIndex idx = m_technology.child(index, 1);
+    m_service = idx.data(Manager::ServiceRole).value<Service*>();
 
     ui.clearButton->setEnabled(m_service->isFavorite());
 
