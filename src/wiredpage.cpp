@@ -24,8 +24,6 @@
 #include <qconnman/manager.h>
 #include <qconnman/technology.h>
 #include <qconnman/service.h>
-#include <qconnman/managerinterface.h>
-#include <qconnman/manager_p.h>
 
 #include <QTimer>
 #include <QDebug>
@@ -43,7 +41,8 @@ WiredPage::WiredPage(const QModelIndex &technology, ConnMan *manager, QWidget *p
 {
     ui.setupUi(this);
 
-    m_wiredTechnology = static_cast<ManagerNode*>(technology.internalPointer())->object<Technology *>();
+    m_wiredTechnology =
+        technology.data(Manager::TechnologyRole).value<Technology*>();
 
     ui.icon->setPixmap(QIcon::fromTheme("network-wired").pixmap(QSize(48, 48)));
     ui.enabled->setChecked(m_wiredTechnology->isPowered());
@@ -62,20 +61,18 @@ WiredPage::WiredPage(const QModelIndex &technology, ConnMan *manager, QWidget *p
 QList<Service *> WiredPage::wiredServices()
 {
     QList<Service *> services;
-
-    for (int i = 0; i < m_technology.model()->rowCount(m_technology); i++)
-    {
-        Service *service = static_cast<ManagerNode *>(m_technology.child(i, 0).internalPointer())->object<Service *>();
-        if (!service->ethernet()->interface().startsWith("eth"))
-        {
+    for (int i = 0; i < m_technology.model()->rowCount(m_technology); i++) {
+        QModelIndex idx = m_technology.child(i, 0);
+        Service *service = idx.data(Manager::ServiceRole).value<Service*>();
+        if (!service->ethernet()->interface().startsWith("eth")) {
             service->setAutoConnect(false);
             continue;
         }
+
         services << service;
     }
 
     qSort(services.begin(), services.end(), ethernetSort);
-
     return services;
 }
 

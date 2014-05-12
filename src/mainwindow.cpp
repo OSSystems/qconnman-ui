@@ -25,8 +25,7 @@
 #include "connman.h"
 
 #include <qconnman/agent.h>
-#include <qconnman/managerinterface.h>
-#include <qconnman/manager_p.h>
+#include <qconnman/manager.h>
 
 #include <QMessageBox>
 #include <QDebug>
@@ -58,23 +57,21 @@ MainWindow::MainWindow(QWidget *parent):
 
 void MainWindow::changePage(const QModelIndex &technology, const QModelIndex &previous)
 {
-    ManagerNode *node = static_cast<ManagerNode*>(technology.internalPointer());
-    if (!node || !node->isTechnology()) {
+    Technology *technologyObject =
+        technology.data(Manager::TechnologyRole).value<Technology*>();
+    if (!technologyObject) {
         qDebug() << "something really bad happened";
         return;
     }
 
     QWidget *page = m_pages.value(technology);
-    if (!page)
-    {
-        Technology *technologyObject = node->object<Technology*>();
+    if (!page) {
         QString technologyType = technologyObject->type().toLower();
-        if (technologyType == "ethernet")
+        if (technologyType == QLatin1String("ethernet")) {
             page = new WiredPage(technology, m_manager, this);
-        else if (technologyType == "wifi")
+        } else if (technologyType == QLatin1String("wifi")) {
             page = new WirelessPage(technology, m_manager, this);
-        else
-        {
+        } else {
             qDebug() << "unsupported technology type: " << technologyType;
             return;
         }
