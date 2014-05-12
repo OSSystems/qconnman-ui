@@ -4,11 +4,11 @@
 
 ## Compiling
 
-Dependencies: Qt4, qconnman library (https://bitbucket.org/ossystems/qconnman)
+Dependencies: Qt4, qconnman library (https://bitbucket.org/devonit/qconnman)
 
 Install qconnman library:
 
-    git clone https://bitbucket.org/ossystems/qconnman.git
+    git clone https://bitbucket.org/devonit/qconnman.git
     cd qconnman
     qmake PREFIX=/usr
     make
